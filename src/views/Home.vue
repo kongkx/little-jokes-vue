@@ -1,19 +1,16 @@
 <template>
   <div class="Home">
     <PageHeader title="超级笑话"></PageHeader>
-
     <div class="tabs">
-      <div class="tabItem is-active">
-        <span class="tabItem__label">最新</span>
+      <div class="tabItem" :class="{ 'is-active': currentTab === 'latest' }">
+        <span class="tabItem__label" @click="setActiveTab('latest')">最新</span>
       </div>
-      <div class="tabItem">
-        <span class="tabItem__label">最热</span>
+      <div class="tabItem" :class="{ 'is-active': currentTab === 'hotest' }">
+        <span class="tabItem__label" @click="setActiveTab('hotest')">最热</span>
       </div>
     </div>
-
     <div>
-      <JokeCard />
-      <JokeCard />
+      <JokeCard v-for="item in data" :key="item.id" :data="item" />
     </div>
   </div>
 </template>
@@ -21,12 +18,41 @@
 <script>
 import PageHeader from "../components/PageHeader";
 import JokeCard from "../components/JokeCard";
+import { fetchLatestPost } from "../api";
 
 export default {
   name: "Home",
   components: {
     PageHeader,
     JokeCard
+  },
+  data: function() {
+    return {
+      data: []
+    };
+  },
+  created: function() {
+    const vm = this;
+    fetchLatestPost().then(res => {
+      vm.data = res.data;
+    });
+  },
+  methods: {
+    setActiveTab(tab) {
+      if (tab !== this.currentTab) {
+        this.$router.push({
+          name: "Home",
+          query: {
+            tab
+          }
+        });
+      }
+    }
+  },
+  computed: {
+    currentTab() {
+      return this.$route.query.tab || "latest";
+    }
   }
 };
 </script>
