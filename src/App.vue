@@ -1,32 +1,33 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <div id="app" class="app">
     <router-view />
+    <BottomNav />
   </div>
 </template>
 
+<script>
+import BottomNav from "./components/BottomNav";
+export default {
+  components: {
+    BottomNav
+  }
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+:root {
+  --body-background-color: #fafafa;
+  --text-color: #111111;
+  --primary-color: #fdcd31;
 
-#nav {
-  padding: 30px;
+  /* bottom nav */
+  --bottom-nav-height: 45px;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+body {
+  margin: 0;
+  background-color: var(--body-background-color);
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.app {
+  padding-bottom: var(--bottom-nav-height);
 }
 </style>
