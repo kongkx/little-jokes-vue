@@ -26,6 +26,7 @@ export default {
 body {
   margin: 0;
   background-color: var(--body-background-color);
+  color: var(--text-color);
 }
 .app {
   padding-bottom: var(--bottom-nav-height);
