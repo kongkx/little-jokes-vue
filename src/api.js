@@ -1,35 +1,144 @@
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import axios from "axios";
+import store from "./store";
 
-async function delay(data, ms) {
-  await sleep(ms);
-  return data;
-}
+const instance = axios.create({
+  // baseURL: 'http://localhost',
+  // baseURL: 'http://172.20.10.4',
+  headers: {
+    accept: "application/json"
+  }
+});
 
-export const fetchLatestPost = async () => {
-  return await delay(
-    {
-      data: [
-        {
-          id: 1,
-          content:
-            "一留学时认识的纽约朋友，在纽约待够了非要到北京玩，一日在商场参与抽奖，看到三等奖LV包包，二等奖笔记本一部，一等奖是神秘大奖，那一个眼红啊，还tm走了运的抽了一等奖，一看奖品，纽约七日游……",
-          hasLiked: true
-        },
-        {
-          id: 2,
-          content:
-            "小时侯有次和哥们一起出去玩，在路上他捡了十块钱，说实话不嫉妒那是假的，于是我让他去小卖部买了些零食花了八块钱，就在我心里有些平衡的时候，结果老板找他四十二。。。",
-          hasLiked: false
-        },
-        {
-          id: 3,
-          content: `跟女友求婚：“以前我浑浑噩噩，直到遇到你，我才知道我以后该干什么？” 女友啪地一巴掌：“流氓！ ”`,
-          hasLiked: false
-        }
-      ]
-    },
-    500
-  );
+const request = config => {
+  const extraHeaders = {};
+  const apiToken = store.getters.apiToken;
+  if (apiToken) {
+    extraHeaders.authorization = `Bearer ${apiToken}`;
+  }
+  const merged = {
+    ...config,
+    headers: {
+      ...(config.headers || {}),
+      ...extraHeaders
+    }
+  };
+  if (process.env.NODE_ENV !== "production") {
+    console.log(merged);
+  }
+
+  return instance.request(merged).then(res => res.data);
+};
+
+export const fetchLatestPost = async params => {
+  return request({
+    url: "/api/feed/latest",
+    method: "GET",
+    params
+  });
+};
+
+export const fetchHottestPost = async params => {
+  return request({
+    url: "/api/feed/hottest",
+    method: "GET",
+    params
+  });
+};
+
+export const fetchRandomPost = async params => {
+  return request({
+    url: "/api/feed/random",
+    method: "GET",
+    params
+  });
+};
+
+export const getPost = async postId => {
+  return request({
+    url: `/api/posts/${postId}`,
+    method: "GET"
+  });
+};
+
+export const likePost = async postId => {
+  return request({
+    url: `/api/posts/${postId}/_like`,
+    method: "POST"
+  });
+};
+
+export const unlikePost = async postId => {
+  return request({
+    url: `/api/posts/${postId}/_unlike`,
+    method: "POST"
+  });
+};
+
+export const reportPost = async (postId, data) => {
+  return request({
+    url: `/api/posts/${postId}/_report`,
+    method: "POST",
+    data
+  });
+};
+
+export const loginWithPassword = async data => {
+  return request({
+    url: "/api/auth/login/with_phone_password",
+    method: "POST",
+    data
+  });
+};
+
+export const loginWithCode = async data => {
+  return request({
+    url: "/api/auth/login/with_phone_code",
+    method: "POST",
+    data
+  });
+};
+
+export const sendLoginCode = async data => {
+  return request({
+    url: "/api/auth/login/send_phone_code",
+    method: "POST",
+    data
+  });
+};
+
+export const sendRegisterCode = async data => {
+  return request({
+    url: "/api/auth/register/send_phone_code",
+    method: "POST",
+    data
+  });
+};
+
+export const registerWithCode = async data => {
+  return request({
+    url: "/api/auth/register/with_phone_code",
+    method: "POST",
+    data
+  });
+};
+
+export const fetchUserCollection = (userId, params) => {
+  return request({
+    url: `/api/users/${userId}/liked-posts`,
+    method: "GET",
+    params
+  });
+};
+
+export const archiveLike = likeId => {
+  return request({
+    url: `api/likes/${likeId}/_archive`,
+    method: "POST"
+  });
+};
+export const unarchiveLike = likeId => {
+  return request({
+    url: `api/likes/${likeId}/_unarchive`,
+    method: "POST"
+  });
 };

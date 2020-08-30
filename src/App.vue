@@ -1,34 +1,134 @@
 <template>
-  <div id="app" class="app">
+  <div id="app" class="app" :class="{ hasBottomNav: showBottomNav }">
     <router-view />
-    <BottomNav />
+    <BottomNav v-if="showBottomNav" />
+    <portal-target name="modal"></portal-target>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import BottomNav from "./components/BottomNav";
 export default {
   components: {
     BottomNav
-  }
+  },
+  computed: mapState({
+    showBottomNav: state => state.showBottomNav,
+    isWeixin: state => state.device.isWeixin
+  })
 };
 </script>
 
-<style>
+<style lang="scss">
 :root {
   --body-background-color: #fafafa;
   --text-color: #111111;
   --primary-color: #fdcd31;
+  --border-color: #eeeeee;
+  --danger-color: #cc0000;
+  --link-color: #1276d4;
+  --wechat-color: #62c852;
+  --weibo-color: #e90f24;
+  --qq-color: #1786df;
+  --meta-color: #999999;
 
   /* bottom nav */
   --bottom-nav-height: 45px;
+
+  --page-header-height: 40px;
+}
+html {
+  height: 100%;
 }
 body {
   margin: 0;
   background-color: var(--body-background-color);
   color: var(--text-color);
+  font-family: sans-serif;
+  height: 100%;
+}
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+div {
+  box-sizing: border-box;
 }
 .app {
-  padding-bottom: var(--bottom-nav-height);
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  padding-top: 40px;
+  &.hasBottomNav {
+    padding-bottom: var(--bottom-nav-height);
+  }
+}
+/* utilies */
+.l_mt_12 {
+  margin-top: 12px;
+}
+.l_mt_16 {
+  margin-top: 16px;
+}
+.l_my_5,
+.l_mt_5 {
+  margin-top: 5px;
+}
+.l_my_5,
+.l_mb_5 {
+  margin-bottom: 5px;
+}
+.l_ml_5 {
+  margin-left: 5px;
+}
+.l_ml_12 {
+  margin-left: 12px;
+}
+.t_center {
+  text-align: center;
+}
+.t_meta {
+  color: var(--meta-color);
+}
+.btn {
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  padding-left: 18px;
+  padding-right: 18px;
+  height: 44px;
+  &_sm {
+    height: 36px;
+    font-size: 14px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  &_block {
+    display: block;
+    width: 100%;
+  }
+  &_primary {
+    background-color: var(--primary-color);
+  }
+  &_link {
+    background-color: transparent;
+    color: var(--link-color);
+  }
+}
+.well {
+  padding: 24px 16px;
+  &_hint {
+    color: var(--meta-color);
+    text-align: center;
+  }
+}
+// toasted style overwrite
+.toasted-container.top-right {
+  top: var(--page-header-height) !important;
+}
+.toasted.toasted-primary.default {
+  background-color: var(--primary-color);
+  color: var(--text-color);
 }
 </style>

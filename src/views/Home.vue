@@ -1,47 +1,65 @@
 <template>
   <div class="Home">
-    <PageHeader title="超级笑话"></PageHeader>
-    <div class="tabs">
-      <div class="tabItem" :class="{ 'is-active': currentTab === 'latest' }">
-        <span class="tabItem__label" @click="setActiveTab('latest')">最新</span>
+    <PageHeader title="小小笑话"></PageHeader>
+    <div class="Home__content">
+      <div class="tabs">
+        <div class="tabItem" :class="{ 'is-active': currentTab === 'latest' }">
+          <span class="tabItem__label" @click="setActiveTab('latest')"
+            >最新</span
+          >
+        </div>
+        <div class="tabItem" :class="{ 'is-active': currentTab === 'hotest' }">
+          <span class="tabItem__label" @click="setActiveTab('hotest')"
+            >最热</span
+          >
+        </div>
       </div>
-      <div class="tabItem" :class="{ 'is-active': currentTab === 'hotest' }">
-        <span class="tabItem__label" @click="setActiveTab('hotest')">最热</span>
-      </div>
+      <joke-list
+        class="Home__list"
+        :fetchData="handleDataFetch"
+        :key="currentTab"
+      />
     </div>
     <div>
-      <JokeCard v-for="item in data" :key="item.id" :data="item" />
+      <AuthAppLogo style="position: fixed; top: 100%; opacity: 0;" />
     </div>
   </div>
 </template>
 
 <script>
 import PageHeader from "../components/PageHeader";
-import JokeCard from "../components/JokeCard";
-import { fetchLatestPost } from "../api";
+import JokeList from "../components/JokeList";
+import AuthAppLogo from "../components/AuthAppLogo";
+import { fetchLatestPost, fetchHottestPost } from "../api";
 
 export default {
   name: "Home",
   components: {
     PageHeader,
-    JokeCard
+    JokeList,
+    AuthAppLogo
   },
   data: function() {
     return {
+      mescroll: null,
+      mescrollDown: {},
+      mescrollUp: {
+        callback: this.upCallback
+      },
       data: []
     };
   },
   created: function() {
-    const vm = this;
-    fetchLatestPost().then(res => {
-      vm.data = res.data;
-    });
+    // const vm = this;
+    // fetchLatestPost().then(res => {
+    //   vm.data = res.data;
+    // });
   },
   methods: {
     setActiveTab(tab) {
       if (tab !== this.currentTab) {
         this.$router.push({
-          name: "Home",
+          name: "home",
           query: {
             tab
           }
@@ -52,18 +70,45 @@ export default {
   computed: {
     currentTab() {
       return this.$route.query.tab || "latest";
+    },
+    handleDataFetch() {
+      if (this.currentTab === "latest") {
+        return fetchLatestPost;
+      }
+      return fetchHottestPost;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.Home {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  &__content {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  &__list {
+    flex: 1;
+    overflow: hidden;
+    margin-top: 5px;
+  }
+}
 .tabs {
   display: flex;
   width: 100vw;
   overflow: hidden;
   height: 32px;
   align-items: center;
+  background-color: var(--body-background-color);
+  position: sticky;
+  top: 0;
   .tabItem {
     flex-basis: 50%;
     text-align: center;

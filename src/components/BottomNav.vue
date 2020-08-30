@@ -69,6 +69,9 @@ export default {
   align-items: center;
   justify-content: space-around;
   box-shadow: 0 -0.5px rgba(0, 0, 0, 0.16);
+  &__itemWrap {
+    flex-basis: 100%;
+  }
 
   &__item {
     flex-shrink: 0;
