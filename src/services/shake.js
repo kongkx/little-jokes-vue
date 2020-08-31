@@ -1,7 +1,7 @@
 const defaultOptions = {
   threshold: 12,
   timeout: 1000,
-  vibrate: 1000
+  vibrate: 300
 };
 function Shake(options) {
   //   this.hasDeviceMotion = !!window.DeviceMotionEvent
