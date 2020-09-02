@@ -82,6 +82,14 @@ export const reportPost = async (postId, data) => {
   });
 };
 
+export const votePost = async (postId, data) => {
+  return request({
+    url: `/api/posts/${postId}/_vote`,
+    method: "POST",
+    data
+  });
+};
+
 export const loginWithPassword = async data => {
   return request({
     url: "/api/auth/login/with_phone_password",

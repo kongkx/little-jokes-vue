@@ -29,7 +29,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.params.id);
     const postId = this.$route.params.id;
     this.fetching = true;
     getPost(postId)
