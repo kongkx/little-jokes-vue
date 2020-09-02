@@ -49,11 +49,16 @@ export default {
       data: []
     };
   },
-  created: function() {
-    // const vm = this;
-    // fetchLatestPost().then(res => {
-    //   vm.data = res.data;
-    // });
+  computed: {
+    currentTab() {
+      return this.$route.query.tab || "latest";
+    },
+    handleDataFetch() {
+      if (this.currentTab === "latest") {
+        return fetchLatestPost;
+      }
+      return fetchHottestPost;
+    }
   },
   methods: {
     setActiveTab(tab) {
@@ -67,17 +72,7 @@ export default {
       }
     }
   },
-  computed: {
-    currentTab() {
-      return this.$route.query.tab || "latest";
-    },
-    handleDataFetch() {
-      if (this.currentTab === "latest") {
-        return fetchLatestPost;
-      }
-      return fetchHottestPost;
-    }
-  }
+  mounted() {}
 };
 </script>
 

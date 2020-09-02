@@ -1,7 +1,10 @@
 const defaultOptions = {
-  threshold: 12,
+  threshold: 16,
+  stopThreshold: 3,
   timeout: 1000,
-  vibrate: 300
+  factorX: 1,
+  factorY: 1,
+  factorZ: 0.2
 };
 function Shake(options) {
   //   this.hasDeviceMotion = !!window.DeviceMotionEvent
@@ -14,6 +17,8 @@ function Shake(options) {
   this.lastX = null;
   this.lastY = null;
   this.lastZ = null;
+
+  this.start = this.start.bind(this);
 }
 
 Shake.prototype.reset = function() {
@@ -37,12 +42,19 @@ Shake.prototype.grantPermission = function(callback) {
         if (permissionState === "granted") {
           manager.permissionGranted = true;
           callback();
+        } else {
+          manager.dispatchServiceError({
+            code: "PERMISSION_NOT_GRANTED"
+          });
         }
       })
-      .catch(() => {
-        manager.dispatchServiceError({
-          code: "PERMISSION_NOT_GRANTED"
-        });
+      .catch(err => {
+        // alert(err.name);
+        if (err.name === "NotAllowedError") {
+          manager.dispatchServiceError({
+            code: "FEATURE_NOT_ALLOWED"
+          });
+        }
       });
   } else {
     let timer = setTimeout(function() {
@@ -64,7 +76,11 @@ Shake.prototype.grantPermission = function(callback) {
 
 Shake.prototype.start = function() {
   if (!this.permissionGranted) {
-    this.grantPermission(this.start.bind(this));
+    setTimeout(() => {
+      this.grantPermission(() => {
+        this.start();
+      });
+    }, 500);
   } else {
     this.reset();
     window.addEventListener("devicemotion", this, false);
@@ -73,6 +89,7 @@ Shake.prototype.start = function() {
 
 Shake.prototype.stop = function() {
   window.removeEventListener("devicemotion", this, false);
+  window.removeEventListener("touchend", this.start);
 };
 
 Shake.prototype.devicemotion = function(e) {
@@ -95,13 +112,17 @@ Shake.prototype.devicemotion = function(e) {
   const deltaY = Math.abs(this.lastY - current.y);
   const deltaZ = Math.abs(this.lastZ - current.z);
 
-  const range = deltaX + deltaY + deltaZ;
+  // const range = deltaX + deltaY + deltaZ
+
+  const range =
+    this.options.factorX * deltaX +
+    this.options.factorY * deltaY +
+    this.options.factorZ * deltaZ;
+
   if (range > this.options.threshold) {
+    // alert(`${deltaX}, ${deltaY}, ${deltaZ}`)
     this.isShaking = true;
-  } else if (range < 1 && this.isShaking) {
-    if (navigator.vibrate && this.options.vibrate) {
-      navigator.vibrate(this.options.vibrate);
-    }
+  } else if (range < this.options.stopThreshold && this.isShaking) {
     const event = this.createEvent("shake", {
       accelerationIncludingGravity: current
     });

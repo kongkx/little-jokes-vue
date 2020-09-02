@@ -10,8 +10,18 @@
         :src="require('@/assets/imgs/shake.png')"
         :srcset="require('@/assets/imgs/shake@2x.png') + ' 2x'"
       />
+      <button
+        class="btn btn_primary"
+        style="margin-top: 24px;"
+        v-if="showInitFeatureHint"
+        @click="initShakeService"
+      >
+        点击开启“摇一摇”
+      </button>
     </div>
-    <PostDetail v-else :data="post" />
+    <div class="Shake__main" v-else>
+      <PostDetail :data="post" />
+    </div>
   </div>
 </template>
 
@@ -26,15 +36,17 @@ import shakeService from "../services/shake";
 
 export default {
   name: "Shake",
-  data: function() {
+  data: function(vm) {
     return {
       post: null,
       isFetching: false,
-      fetchedAt: null
+      fetchedAt: null,
+      showInitFeatureHint: !vm.$store.state.device.onceTouched
     };
   },
   computed: mapState({
-    hasMotionFeature: state => state.device.features.motion
+    hasMotionFeature: state => state.device.features.motion,
+    onceTouched: state => state.device.onceTouched
   }),
   components: {
     PageHeader,
@@ -42,6 +54,10 @@ export default {
     Loader
   },
   methods: {
+    initShakeService() {
+      this.showInitFeatureHint = false;
+      shakeService.start();
+    },
     handleShake() {
       const vm = this;
       if (
@@ -51,6 +67,14 @@ export default {
         return;
       }
       vm.isFetching = true;
+      navigator.vibrate =
+        navigator.vibrate ||
+        navigator.webkitVibrate ||
+        navigator.mozVibrate ||
+        navigator.msVibrate;
+      if (navigator.vibrate) {
+        navigator.vibrate(300);
+      }
       fetchRandomPost({
         page: 1,
         page_size: 1,
@@ -67,22 +91,27 @@ export default {
         });
     },
     handleShakeInitFailed(e) {
-      console.log(e.detail);
       switch (e.detail.code) {
         case "FEATURE_DISABLED":
-          alert("已禁用");
+          alert("机身抖动功能已禁用");
+          break;
+        case "FEATURE_NOT_ALLOWED":
+          this.showInitFeatureHint = true;
+          break;
       }
     }
   },
   mounted() {
     window.addEventListener("shake", this.handleShake);
-    // window.addEventListener("shake_init_failed", this.handleShakeInitFailed);
-    shakeService.start();
+    window.addEventListener("shake_init_failed", this.handleShakeInitFailed);
+    if (this.onceTouched) {
+      shakeService.start();
+    }
   },
   beforeDestroy() {
     shakeService.stop();
     window.removeEventListener("shake", this.handleShake);
-    // window.addEventListener("shake_init_failed", this.handleShakeInitFailed);
+    window.addEventListener("shake_init_failed", this.handleShakeInitFailed);
   }
 };
 </script>
@@ -98,11 +127,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
   }
   &__loading {
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: center;
+  }
+  &__main {
+    flex: 1;
   }
 }
 </style>

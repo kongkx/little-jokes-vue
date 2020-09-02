@@ -182,9 +182,7 @@ export default {
         })
         .catch(err => {
           this.submitting = false;
-          if (err.message) {
-            alert(err.message);
-          }
+          alert(err.message || err.code);
         });
     },
     loginWithCode() {

@@ -108,11 +108,7 @@ export default {
         })
         .catch(err => {
           this.fetchingCode = false;
-          if (err.response && err.response.data && err.response.data.message) {
-            alert(err.response.data.message);
-          } else if (err.message) {
-            alert(err.message);
-          }
+          alert(err.message || err.code);
         });
     },
     registerWithCode() {
@@ -144,11 +140,7 @@ export default {
         .catch(err => {
           this.submitting = false;
           console.log(err);
-          if (err.response && err.response.data && err.response.data.message) {
-            alert(err.response.data.message);
-          } else if (err.message) {
-            alert(err.message);
-          }
+          alert(err.message || err.code);
         });
     },
     updateCountDownLeft() {

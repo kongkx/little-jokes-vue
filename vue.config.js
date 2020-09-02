@@ -1,15 +1,15 @@
-// const fs = require('fs')
-// const path = require('path')
+const fs = require("fs");
+const path = require("path");
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   devServer: {
     open: process.platform === "darwin",
     host: "0.0.0.0",
-    // https: {
-    //   key: fs.readFileSync(path.resolve(__dirname, './privkey.pem')),
-    //   cert: fs.readFileSync(path.resolve(__dirname, './cert.pem')),
-    // },
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, "./privkey.pem")),
+      cert: fs.readFileSync(path.resolve(__dirname, "./cert.pem"))
+    },
     hotOnly: false,
     proxy: {
       "/api": {

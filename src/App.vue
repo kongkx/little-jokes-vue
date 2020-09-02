@@ -9,6 +9,7 @@
 <script>
 import { mapState } from "vuex";
 import BottomNav from "./components/BottomNav";
+import { loadWechatSDK } from "./utils";
 export default {
   components: {
     BottomNav
@@ -16,7 +17,12 @@ export default {
   computed: mapState({
     showBottomNav: state => state.showBottomNav,
     isWeixin: state => state.device.isWeixin
-  })
+  }),
+  created() {
+    if (this.isWeixin) {
+      loadWechatSDK();
+    }
+  }
 };
 </script>
 

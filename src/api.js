@@ -26,7 +26,19 @@ const request = config => {
     console.log(merged);
   }
 
-  return instance.request(merged).then(res => res.data);
+  return instance
+    .request(merged)
+    .then(res => res.data)
+    .catch(err => {
+      if (err.response && err.response.data) {
+        const resError = new Error(err.response.data.message);
+        resError.code = err.response.data.code;
+        resError.data = err.response.data.data;
+        throw resError;
+      } else {
+        throw err;
+      }
+    });
 };
 
 export const fetchLatestPost = async params => {

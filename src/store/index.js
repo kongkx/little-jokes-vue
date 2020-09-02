@@ -29,12 +29,13 @@ function getInitialState() {
         motion: !!window.DeviceMotionEvent
       },
       isIos: isIos(),
-      isWeixin: isWeixin()
+      isWeixin: isWeixin(),
+      onceTouched: false
     }
   };
 }
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: getInitialState,
   getters: {
     isLoggedIn(state) {
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     },
     apiToken(state) {
       return state.auth.api_token;
+    },
+    onceTouched(state) {
+      return state.device.onceTouched;
     }
   },
   mutations: {
@@ -61,6 +65,9 @@ export default new Vuex.Store({
     resetAuthInfo(state) {
       state.auth.user = null;
       state.auth.api_token = undefined;
+    },
+    touched(state) {
+      state.device.onceTouched = true;
     }
   },
   actions: {
@@ -75,3 +82,13 @@ export default new Vuex.Store({
   },
   modules: {}
 });
+
+window.addEventListener(
+  "touchend",
+  () => {
+    store.commit("touched");
+  },
+  { once: true }
+);
+
+export default store;
