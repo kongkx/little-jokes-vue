@@ -157,6 +157,12 @@ export default {
     hasSwipeActions() {
       return this.swipeActions && this.swipeActions.length > 0;
     },
+    postPath() {
+      if (this.data) {
+        return `/posts/${this.data.id}`;
+      }
+      return "";
+    },
     liked() {
       if (this.isUnliking) {
         return false;
@@ -197,12 +203,26 @@ export default {
   },
 
   methods: {
+    confirmLogin(msg = "您需要先登录后才能进行操作") {
+      return new Promise((resolve, reject) => {
+        const result = window.confirm(msg);
+        if (result) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    },
     toggleLike(data) {
       if (!this.isLoggedIn) {
-        this.$router.push({
-          name: "login",
-          next: this.$route.fullPath
-        });
+        this.confirmLogin()
+          .then(() => {
+            this.$router.push({
+              name: "login",
+              next: this.postPath
+            });
+          })
+          .catch(() => {});
         return;
       }
       if (this.isLiking || this.isUnliking) {
@@ -255,10 +275,15 @@ export default {
     },
     report() {
       if (!this.isLoggedIn) {
-        this.$router.push({
-          name: "login",
-          next: this.$route.fullPath
-        });
+        this.confirmLogin()
+          .then(() => {
+            this.$router.push({
+              name: "login",
+              next: this.postPath
+            });
+          })
+          .catch(() => {})
+          .finally(this.closeExtraMenu);
         return;
       }
       this.showReportForm = true;
@@ -269,7 +294,7 @@ export default {
     },
     // share feature
     getShareLink() {
-      return window.location.origin + "/posts/" + this.data.id;
+      return window.location.origin + this.postPath;
     },
     handleLinkShare() {
       var vm = this;
