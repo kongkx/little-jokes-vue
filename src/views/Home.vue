@@ -71,8 +71,7 @@ export default {
         });
       }
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 
