@@ -37,6 +37,7 @@ export default {
   --wechat-color: #62c852;
   --weibo-color: #e90f24;
   --qq-color: #1786df;
+  --github-color: #111111;
   --meta-color: #999999;
 
   /* bottom nav */
@@ -85,11 +86,17 @@ div {
 .l_mb_5 {
   margin-bottom: 5px;
 }
-.l_ml_5 {
+.l_ml_5,
+.l_mx_5 {
   margin-left: 5px;
 }
-.l_ml_12 {
+.l_ml_12,
+.l_mx_12 {
   margin-left: 12px;
+}
+.l_mr_12,
+.l_mx_12 {
+  margin-right: 12px;
 }
 .t_center {
   text-align: center;

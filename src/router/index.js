@@ -9,6 +9,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Terms from "../views/Terms.vue";
 import Post from "../views/Post.vue";
+import OauthHandling from "../views/OauthHandling.vue";
 
 Vue.use(VueRouter);
 
@@ -71,6 +72,11 @@ const routes = [
         next();
       }
     }
+  },
+  {
+    path: "/oauth/:provider",
+    name: "oauth",
+    component: OauthHandling
   },
   {
     path: "/terms",

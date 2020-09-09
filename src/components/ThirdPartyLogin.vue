@@ -17,6 +17,11 @@
           <QQIcon />
         </button>
       </div>
+      <div class="ThirdPartyLogin__Option" @click="handleGithubLogin">
+        <button class="ThirdPartyLogin__github">
+          <GithubIcon />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -25,11 +30,14 @@
 import WechatIcon from "../components/WechatIcon";
 import WeiboIcon from "../components/WeiboIcon";
 import QQIcon from "../components/QQIcon";
+import GithubIcon from "../components/GithubIcon";
+import { stringify } from "../utils";
 export default {
   components: {
     WechatIcon,
     WeiboIcon,
-    QQIcon
+    QQIcon,
+    GithubIcon
   },
   methods: {
     handleWechatLogin() {
@@ -70,6 +78,20 @@ export default {
           }
         });
       }
+    },
+    handleGithubLogin() {
+      const link =
+        "https://github.com/login/oauth/authorize?" +
+        stringify({
+          client_id: process.env.VUE_APP_GITHUB_CLIENT_ID,
+          scope: ["user:email"].join(","),
+          response_type: "code",
+          redirect_uri: `${window.location.origin}/oauth/github${
+            this.$route.query.next ? "?next=" + this.$route.query.next : ""
+          }`
+        });
+      console.log(link);
+      window.location = link;
     }
   }
 };
@@ -106,7 +128,8 @@ export default {
 
   &__wechat,
   &__weibo,
-  &__qq {
+  &__qq,
+  &__github {
     @extend %loginOptionBtn;
     .icon {
       fill: currentColor;
@@ -123,6 +146,10 @@ export default {
   &__qq {
     color: var(--qq-color);
     border-color: var(--qq-color);
+  }
+  &__github {
+    color: var(--github-color);
+    border-color: var(--github-color);
   }
 }
 </style>

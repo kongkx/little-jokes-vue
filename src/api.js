@@ -102,6 +102,15 @@ export const votePost = async (postId, data) => {
   });
 };
 
+export const loginWithOauthCode = async (provider, data) => {
+  return request({
+    url: "/api/auth/login/with_oauth_code",
+    method: "POST",
+    params: { provider },
+    data
+  });
+};
+
 export const loginWithPassword = async data => {
   return request({
     url: "/api/auth/login/with_phone_password",

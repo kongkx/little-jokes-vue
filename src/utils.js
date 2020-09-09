@@ -21,3 +21,12 @@ export const loadWechatSDK = () => {
     document.head.appendChild(fallback);
   };
 };
+
+export const stringify = params => {
+  if (!params) {
+    return "";
+  }
+  return Object.entries(params)
+    .map(([key, value]) => `${key}=${window.encodeURIComponent(value)}`)
+    .join("&");
+};
