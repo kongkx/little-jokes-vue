@@ -7,23 +7,23 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import BottomNav from "./components/BottomNav";
-import { loadWechatSDK } from "./utils";
+import { mapState } from 'vuex'
+import BottomNav from './components/BottomNav'
+import { loadWechatSDK } from './utils'
 export default {
   components: {
-    BottomNav
+    BottomNav,
   },
   computed: mapState({
     showBottomNav: state => state.showBottomNav,
-    isWeixin: state => state.device.isWeixin
+    isWeixin: state => state.device.isWeixin,
   }),
   created() {
     if (this.isWeixin) {
-      loadWechatSDK();
+      loadWechatSDK()
     }
-  }
-};
+  },
+}
 </script>
 
 <style lang="scss">

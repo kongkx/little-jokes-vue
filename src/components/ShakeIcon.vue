@@ -25,13 +25,13 @@
 
 <script>
 export default {
-  name: "ShakeIcon",
+  name: 'ShakeIcon',
   props: {
     active: {
-      type: Boolean
-    }
-  }
-};
+      type: Boolean,
+    },
+  },
+}
 </script>
 
 <style lang="scss">

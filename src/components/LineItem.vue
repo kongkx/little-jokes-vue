@@ -19,17 +19,17 @@
 
 <script>
 export default {
-  name: "LineItem",
+  name: 'LineItem',
   props: {
     actions: {
-      type: Array // { key: 'delete', modifier: 'string', callback: Function }
-    }
+      type: Array, // { key: 'delete', modifier: 'string', callback: Function }
+    },
   },
   data: function() {
     return {
       showActions: false,
-      initialX: undefined
-    };
-  }
-};
+      initialX: undefined,
+    }
+  },
+}
 </script>

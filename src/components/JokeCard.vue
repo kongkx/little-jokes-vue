@@ -88,8 +88,8 @@
         @click="
           () => {
             item.callback(data, index).then(() => {
-              showActions = false;
-            });
+              showActions = false
+            })
           }
         "
       >
@@ -100,32 +100,32 @@
 </template>
 
 <script>
-import LikeIcon from "./LikeIcon";
-import DotsIcon from "./DotsIcon";
-import ShareIcon from "./ShareIcon";
-import LinkIcon from "./LinkIcon";
-import WechatIcon from "./WechatIcon";
-import WechatFeedIcon from "./WechatFeedIcon";
-import WeiboIcon from "./WeiboIcon";
-import QQIcon from "./QQIcon";
-import ActionSheet from "./ActionSheet";
-import Modal from "./Modal";
-import PostReportForm from "./PostReportForm";
-import { likePost, unlikePost } from "../api";
-import { mapGetters, mapState } from "vuex";
+import LikeIcon from './LikeIcon'
+import DotsIcon from './DotsIcon'
+import ShareIcon from './ShareIcon'
+import LinkIcon from './LinkIcon'
+import WechatIcon from './WechatIcon'
+import WechatFeedIcon from './WechatFeedIcon'
+import WeiboIcon from './WeiboIcon'
+import QQIcon from './QQIcon'
+import ActionSheet from './ActionSheet'
+import Modal from './Modal'
+import PostReportForm from './PostReportForm'
+import { likePost, unlikePost } from '../api'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
-  name: "JokeCard",
+  name: 'JokeCard',
   props: {
     data: {
-      type: Object
+      type: Object,
     },
     index: {
-      type: Number
+      type: Number,
     },
     swipeActions: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   components: {
     LikeIcon,
@@ -138,7 +138,7 @@ export default {
     QQIcon,
     PostReportForm,
     ActionSheet,
-    Modal
+    Modal,
   },
 
   data() {
@@ -149,282 +149,282 @@ export default {
       swipeDelta: 0,
       isSwiping: false,
       showActions: false,
-      actions: [{ label: "举报", onClick: this.report }]
-    };
+      actions: [{ label: '举报', onClick: this.report }],
+    }
   },
 
   computed: {
     hasSwipeActions() {
-      return this.swipeActions && this.swipeActions.length > 0;
+      return this.swipeActions && this.swipeActions.length > 0
     },
     postPath() {
       if (this.data) {
-        return `/posts/${this.data.id}`;
+        return `/posts/${this.data.id}`
       }
-      return "";
+      return ''
     },
     liked() {
       if (this.isUnliking) {
-        return false;
+        return false
       }
       if (this.isLiking) {
-        return true;
+        return true
       }
-      return !!this.data.like;
+      return !!this.data.like
     },
     swipeAnimation() {
       // if is swiping then
       if (this.isSwiping) {
         const style = {
-          transition: "transform 33ms linear"
-        };
-        if (this.swipeDelta < 0) {
-          style.transform = `translateX(${this.swipeDelta}px)`;
+          transition: 'transform 33ms linear',
         }
-        return style;
+        if (this.swipeDelta < 0) {
+          style.transform = `translateX(${this.swipeDelta}px)`
+        }
+        return style
       } else if (this.showActions) {
         if (!this.$refs.actions) {
-          return {};
+          return {}
         }
-        const { width } = this.$refs.actions.getBoundingClientRect();
+        const { width } = this.$refs.actions.getBoundingClientRect()
         return {
-          transform: `translateX(-${width}px)`
-        };
+          transform: `translateX(-${width}px)`,
+        }
       } else {
         return {
-          transform: `translateX(0px)`
-        };
+          transform: `translateX(0px)`,
+        }
       }
     },
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(['isLoggedIn']),
     ...mapState({
-      isWeixin: state => state.device.isWeixin
-    })
+      isWeixin: state => state.device.isWeixin,
+    }),
   },
 
   methods: {
-    confirmLogin(msg = "您需要先登录后才能进行操作") {
+    confirmLogin(msg = '您需要先登录后才能进行操作') {
       return new Promise((resolve, reject) => {
-        const result = window.confirm(msg);
+        const result = window.confirm(msg)
         if (result) {
-          resolve();
+          resolve()
         } else {
-          reject();
+          reject()
         }
-      });
+      })
     },
     toggleLike(data) {
       if (!this.isLoggedIn) {
         this.confirmLogin()
           .then(() => {
             this.$router.push({
-              name: "login",
-              next: this.postPath
-            });
+              name: 'login',
+              next: this.postPath,
+            })
           })
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
       if (this.isLiking || this.isUnliking) {
-        return;
+        return
       }
 
       if (data.like) {
-        this.isLiking = true;
+        this.isLiking = true
         unlikePost(data.id).then(() => {
-          data.like = null;
-          this.isLiking = false;
-        });
+          data.like = null
+          this.isLiking = false
+        })
       } else {
-        this.isUnliking = true;
+        this.isUnliking = true
         likePost(data.id).then(res => {
-          data.like = res.data.like;
-          this.isUnliking = false;
-        });
+          data.like = res.data.like
+          this.isUnliking = false
+        })
       }
     },
     openExtraMenu() {
-      this.extraMenuOpened = true;
+      this.extraMenuOpened = true
     },
     closeExtraMenu() {
-      this.extraMenuOpened = false;
+      this.extraMenuOpened = false
     },
     getShareInfo() {
       return {
         title: `小小笑话 -- ${this.data.content.substring(0, 4)}...`,
         text:
           this.data.content.length > 50
-            ? this.data.content.substring(0, 50) + "..."
+            ? this.data.content.substring(0, 50) + '...'
             : this.data.content.substring,
         url: this.getShareLink(),
-        image_url: window.location.origin + "/AppIcon.png"
-      };
+        image_url: window.location.origin + '/AppIcon.png',
+      }
     },
     openSharePanel() {
       if (navigator.share) {
         navigator
           .share(this.getShareInfo())
-          .then(() => console.log("Successful share"))
-          .catch(error => console.log("Error sharing", error));
+          .then(() => console.log('Successful share'))
+          .catch(error => console.log('Error sharing', error))
       } else {
-        this.sharePanelOpend = true;
+        this.sharePanelOpend = true
       }
     },
     closeSharePanel() {
-      this.sharePanelOpend = false;
+      this.sharePanelOpend = false
     },
     report() {
       if (!this.isLoggedIn) {
         this.confirmLogin()
           .then(() => {
             this.$router.push({
-              name: "login",
-              next: this.postPath
-            });
+              name: 'login',
+              next: this.postPath,
+            })
           })
           .catch(() => {})
-          .finally(this.closeExtraMenu);
-        return;
+          .finally(this.closeExtraMenu)
+        return
       }
-      this.showReportForm = true;
-      this.closeExtraMenu();
+      this.showReportForm = true
+      this.closeExtraMenu()
     },
     hideReportForm() {
-      this.showReportForm = false;
+      this.showReportForm = false
     },
     // share feature
     getShareLink() {
-      return window.location.origin + this.postPath;
+      return window.location.origin + this.postPath
     },
     handleLinkShare() {
-      var vm = this;
-      this.closeSharePanel();
-      navigator.permissions.query({ name: "clipboard-write" }).then(result => {
-        if (result.state === "denied") {
-          this.$toasted.error("无法获取粘贴板写入权限", {
-            duration: 3000
-          });
-        } else if (result.state == "granted") {
+      var vm = this
+      this.closeSharePanel()
+      navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
+        if (result.state === 'denied') {
+          this.$toasted.error('无法获取粘贴板写入权限', {
+            duration: 3000,
+          })
+        } else if (result.state == 'granted') {
           navigator.clipboard
             .writeText(vm.getShareLink())
             .then(() => {
-              const msg = "链接已复制";
+              const msg = '链接已复制'
               this.$toasted.show(msg, {
-                duration: 3000
-              });
+                duration: 3000,
+              })
             })
             .catch(err => {
-              alert(err.message);
-            });
+              alert(err.message)
+            })
         }
-      });
+      })
     },
     handleWechatShare() {
-      var vm = this;
-      this.closeSharePanel();
+      var vm = this
+      this.closeSharePanel()
       if (!this.isWeixin) {
         navigator.permissions
-          .query({ name: "clipboard-write" })
+          .query({ name: 'clipboard-write' })
           .then(result => {
-            if (result.state === "denied") {
-              this.$toasted.error("无法获取粘贴板写入权限", {
-                duration: 3000
-              });
-            } else if (result.state == "granted") {
+            if (result.state === 'denied') {
+              this.$toasted.error('无法获取粘贴板写入权限', {
+                duration: 3000,
+              })
+            } else if (result.state == 'granted') {
               navigator.clipboard
                 .writeText(vm.getShareLink())
                 .then(() => {
-                  const msg = "链接已复制，请打开微信后，粘贴后发送";
+                  const msg = '链接已复制，请打开微信后，粘贴后发送'
                   this.$toasted.show(msg, {
-                    duration: 3000
-                  });
+                    duration: 3000,
+                  })
                 })
                 .catch(err => {
-                  alert(err.message);
-                });
+                  alert(err.message)
+                })
             }
-          });
+          })
       }
     },
     handleFriendGroupShare() {
-      this.closeSharePanel();
+      this.closeSharePanel()
       // TODO: 是否有方法在微信中唤起ShareMenu
     },
     handleWeiboShare() {
-      this.closeSharePanel();
-      const share = this.getShareInfo();
-      const shareText = this.$store.state.app.name + "--" + share.text;
+      this.closeSharePanel()
+      const share = this.getShareInfo()
+      const shareText = this.$store.state.app.name + '--' + share.text
       const path =
-        "https://service.weibo.com/share/share.php?url=" +
+        'https://service.weibo.com/share/share.php?url=' +
         encodeURIComponent(share.url) +
-        "&title=" +
+        '&title=' +
         encodeURIComponent(shareText) +
-        "&appkey=" +
+        '&appkey=' +
         process.env.VUE_APP_SHARE_WEIBO_APP_KEY +
-        "&pic=" +
+        '&pic=' +
         encodeURIComponent(share.image_url) +
-        "&searchPic=false";
-      window.open(path);
+        '&searchPic=false'
+      window.open(path)
     },
     handleQQShare() {
-      this.closeSharePanel();
-      const share = this.getShareInfo();
-      console.log(share);
+      this.closeSharePanel()
+      const share = this.getShareInfo()
+      console.log(share)
       const path =
-        "https://connect.qq.com/widget/shareqq/index.html?" +
-        "url=" +
+        'https://connect.qq.com/widget/shareqq/index.html?' +
+        'url=' +
         share.url +
-        "&sharesource=qzone" +
-        "&title=" +
+        '&sharesource=qzone' +
+        '&title=' +
         encodeURIComponent(share.title) +
-        "&summary=" +
-        share.text;
-      window.open(path);
+        '&summary=' +
+        share.text
+      window.open(path)
     },
     // swipe feature
     handleTouchStart() {
       if (!this.$refs.actions) {
-        return;
+        return
       }
-      let touch = event.changedTouches[0];
-      this.initialX = touch.pageX;
-      this.initialY = touch.pageY;
+      let touch = event.changedTouches[0]
+      this.initialX = touch.pageX
+      this.initialY = touch.pageY
     },
     handleTouchMove() {
       if (!this.$refs.actions) {
-        return;
+        return
       }
       if (!this.initialX) {
-        return;
+        return
       }
       if (this.isSwiping) {
-        event.stopPropagation();
-        event.preventDefault();
+        event.stopPropagation()
+        event.preventDefault()
       }
-      const touch = event.changedTouches[0];
-      const delta = touch.pageX - this.initialX;
-      const deltaY = touch.pageY - this.initialY;
-      this.swipeDelta = delta;
+      const touch = event.changedTouches[0]
+      const delta = touch.pageX - this.initialX
+      const deltaY = touch.pageY - this.initialY
+      this.swipeDelta = delta
       if (Math.abs(delta) > Math.max(Math.abs(deltaY, 10))) {
-        this.isSwiping = true;
+        this.isSwiping = true
       }
     },
     handleTouchEnd() {
       if (!this.$refs.actions) {
-        return;
+        return
       }
       // const { width } = this.$refs.actions.getBoundingClientRect();
       if (this.swipeDelta < -40) {
-        this.showActions = true;
+        this.showActions = true
       } else {
-        this.showActions = false;
+        this.showActions = false
       }
-      this.isSwiping = false;
-      this.swipeDelta = 0;
-      this.initialX = undefined;
-    }
-  }
-};
+      this.isSwiping = false
+      this.swipeDelta = 0
+      this.initialX = undefined
+    },
+  },
+}
 </script>
 
 <style lang="scss">
@@ -455,7 +455,7 @@ export default {
     font-size: 16px;
 
     &::after {
-      content: "";
+      content: '';
       width: 600%;
       height: 100%;
       top: 0;
@@ -471,7 +471,7 @@ export default {
   position: relative;
   &.hasArchived {
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;

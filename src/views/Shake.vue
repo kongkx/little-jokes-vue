@@ -26,100 +26,100 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { fetchRandomPost } from "../api";
-import PageHeader from "../components/PageHeader";
-import PostDetail from "../components/PostDetail";
-import Loader from "../components/Loader";
+import { mapState } from 'vuex'
+import { fetchRandomPost } from '../api'
+import PageHeader from '../components/PageHeader'
+import PostDetail from '../components/PostDetail'
+import Loader from '../components/Loader'
 
-import shakeService from "../services/shake";
-import { setCache, getCache } from "../services/cache";
+import shakeService from '../services/shake'
+import { setCache, getCache } from '../services/cache'
 
 export default {
-  name: "Shake",
+  name: 'Shake',
   data: function(vm) {
-    const cache = getCache(`route.${vm.$route.name}`) || {};
+    const cache = getCache(`route.${vm.$route.name}`) || {}
     return {
       post: null,
       isFetching: false,
       fetchedAt: null,
       showInitFeatureHint: !vm.$store.state.device.onceTouched,
-      ...cache
-    };
+      ...cache,
+    }
   },
   computed: mapState({
     hasMotionFeature: state => state.device.features.motion,
-    onceTouched: state => state.device.onceTouched
+    onceTouched: state => state.device.onceTouched,
   }),
   components: {
     PageHeader,
     PostDetail,
-    Loader
+    Loader,
   },
   methods: {
     initShakeService() {
-      this.showInitFeatureHint = false;
-      shakeService.start();
+      this.showInitFeatureHint = false
+      shakeService.start()
     },
     handleShake() {
-      const vm = this;
+      const vm = this
       if (
         this.isFetching ||
         (this.fetchedAt && Date.now() - this.fetchedAt < 1000)
       ) {
-        return;
+        return
       }
-      vm.isFetching = true;
+      vm.isFetching = true
       navigator.vibrate =
         navigator.vibrate ||
         navigator.webkitVibrate ||
         navigator.mozVibrate ||
-        navigator.msVibrate;
+        navigator.msVibrate
       if (navigator.vibrate) {
-        navigator.vibrate(300);
+        navigator.vibrate(300)
       }
       fetchRandomPost({
         page: 1,
         page_size: 1,
-        seed: Date.now()
+        seed: Date.now(),
       })
         .then(res => {
-          vm.post = res.data[0];
-          vm.fetchedAt = Date.now();
-          vm.isFetching = false;
+          vm.post = res.data[0]
+          vm.fetchedAt = Date.now()
+          vm.isFetching = false
         })
         .catch(err => {
-          console.log(err);
-          vm.isFetching = false;
-        });
+          console.log(err)
+          vm.isFetching = false
+        })
     },
     handleShakeInitFailed(e) {
       switch (e.detail.code) {
-        case "FEATURE_DISABLED":
-          alert("机身抖动功能已禁用");
-          break;
-        case "FEATURE_NOT_ALLOWED":
-          this.showInitFeatureHint = true;
-          break;
+        case 'FEATURE_DISABLED':
+          alert('机身抖动功能已禁用')
+          break
+        case 'FEATURE_NOT_ALLOWED':
+          this.showInitFeatureHint = true
+          break
       }
-    }
+    },
   },
   mounted() {
-    window.addEventListener("shake", this.handleShake);
-    window.addEventListener("shake_init_failed", this.handleShakeInitFailed);
+    window.addEventListener('shake', this.handleShake)
+    window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
     if (this.onceTouched) {
-      shakeService.start();
+      shakeService.start()
     }
   },
   updated() {
-    setCache(`route.${this.$route.name}`, this.$data);
+    setCache(`route.${this.$route.name}`, this.$data)
   },
   beforeDestroy() {
-    shakeService.stop();
-    window.removeEventListener("shake", this.handleShake);
-    window.addEventListener("shake_init_failed", this.handleShakeInitFailed);
-  }
-};
+    shakeService.stop()
+    window.removeEventListener('shake', this.handleShake)
+    window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
+  },
+}
 </script>
 
 <style lang="scss">

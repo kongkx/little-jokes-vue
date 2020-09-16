@@ -22,13 +22,13 @@
 
 <script>
 export default {
-  name: "LikeIcon",
+  name: 'LikeIcon',
   props: {
     liked: {
-      type: Boolean
-    }
-  }
-};
+      type: Boolean,
+    },
+  },
+}
 </script>
 
 <style lang="scss">

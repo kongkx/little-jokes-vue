@@ -16,45 +16,45 @@
 
 <script>
 export default {
-  name: "Modal",
+  name: 'Modal',
   props: {
     placement: {
-      type: String
+      type: String,
     },
     open: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
-      active: false
-    };
+      active: false,
+    }
   },
   computed: {
     placementClass(vm) {
       switch (vm.placement) {
-        case "center":
-          return "Modal_placeCenter";
-        case "bottom":
-          return "Modal_placeBottom";
+        case 'center':
+          return 'Modal_placeCenter'
+        case 'bottom':
+          return 'Modal_placeBottom'
         default:
-          return "";
+          return ''
       }
     },
     classNames(vm) {
-      const classes = [this.placementClass];
+      const classes = [this.placementClass]
       if (vm.active && vm.open) {
-        classes.push("is-active");
+        classes.push('is-active')
       }
-      return classes;
-    }
+      return classes
+    },
   },
   methods: {
     updateActive() {
-      console.log(this);
-    }
-  }
-};
+      console.log(this)
+    },
+  },
+}
 </script>
 
 <style lang="scss">

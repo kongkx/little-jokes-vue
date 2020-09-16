@@ -22,21 +22,21 @@
 </template>
 
 <script>
-import Modal from "./Modal";
+import Modal from './Modal'
 export default {
-  name: "ActionSheet",
+  name: 'ActionSheet',
   props: {
     open: {
-      type: Boolean
+      type: Boolean,
     },
     actions: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   components: {
-    Modal
-  }
-};
+    Modal,
+  },
+}
 </script>
 
 <style lang="scss">

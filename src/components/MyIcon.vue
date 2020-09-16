@@ -26,13 +26,13 @@
 
 <script>
 export default {
-  name: "MyIcon",
+  name: 'MyIcon',
   props: {
     active: {
-      type: Boolean
-    }
-  }
-};
+      type: Boolean,
+    },
+  },
+}
 </script>
 
 <style lang="scss">

@@ -5,21 +5,21 @@
 </template>
 
 <script>
-import PageHeader from "../components/PageHeader";
+import PageHeader from '../components/PageHeader'
 export default {
   components: {
-    PageHeader
+    PageHeader,
   },
   methods: {
     goBack() {
-      this.$root.goBack();
-    }
+      this.$root.goBack()
+    },
   },
   mounted() {
-    this.$store.commit("hideNav");
+    this.$store.commit('hideNav')
   },
   destroyed() {
-    this.$store.commit("showNav");
-  }
-};
+    this.$store.commit('showNav')
+  },
+}
 </script>

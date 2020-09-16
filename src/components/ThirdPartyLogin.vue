@@ -27,74 +27,74 @@
 </template>
 
 <script>
-import WechatIcon from "../components/WechatIcon";
-import WeiboIcon from "../components/WeiboIcon";
-import QQIcon from "../components/QQIcon";
-import GithubIcon from "../components/GithubIcon";
-import { stringify } from "../utils";
+import WechatIcon from '../components/WechatIcon'
+import WeiboIcon from '../components/WeiboIcon'
+import QQIcon from '../components/QQIcon'
+import GithubIcon from '../components/GithubIcon'
+import { stringify } from '../utils'
 export default {
   components: {
     WechatIcon,
     WeiboIcon,
     QQIcon,
-    GithubIcon
+    GithubIcon,
   },
   methods: {
     handleWechatLogin() {
       if (this.toasted) {
-        this.toasted.text("微信登录未接入");
+        this.toasted.text('微信登录未接入')
       } else {
-        this.toasted = this.$toasted.show("微信登录未接入", {
+        this.toasted = this.$toasted.show('微信登录未接入', {
           duration: 3000,
           singleton: true,
           onComplete: () => {
-            this.toasted = undefined;
-          }
-        });
+            this.toasted = undefined
+          },
+        })
       }
     },
     handleWeiboLogin() {
       if (this.toasted) {
-        this.toasted.text("微博登录未接入");
+        this.toasted.text('微博登录未接入')
       } else {
-        this.toasted = this.$toasted.show("微博登录未接入", {
+        this.toasted = this.$toasted.show('微博登录未接入', {
           duration: 3000,
           singleton: true,
           onComplete: () => {
-            this.toasted = undefined;
-          }
-        });
+            this.toasted = undefined
+          },
+        })
       }
     },
     handleQQLogin() {
       if (this.toasted) {
-        this.toasted.text("QQ登录未接入");
+        this.toasted.text('QQ登录未接入')
       } else {
-        this.toasted = this.$toasted.show("QQ登录未接入", {
+        this.toasted = this.$toasted.show('QQ登录未接入', {
           duration: 3000,
           singleton: true,
           onComplete: () => {
-            this.toasted = undefined;
-          }
-        });
+            this.toasted = undefined
+          },
+        })
       }
     },
     handleGithubLogin() {
       const link =
-        "https://github.com/login/oauth/authorize?" +
+        'https://github.com/login/oauth/authorize?' +
         stringify({
           client_id: process.env.VUE_APP_GITHUB_CLIENT_ID,
-          scope: ["user:email"].join(","),
-          response_type: "code",
+          scope: ['user:email'].join(','),
+          response_type: 'code',
           redirect_uri: `${window.location.origin}/oauth/github${
-            this.$route.query.next ? "?next=" + this.$route.query.next : ""
-          }`
-        });
-      console.log(link);
-      window.location = link;
-    }
-  }
-};
+            this.$route.query.next ? '?next=' + this.$route.query.next : ''
+          }`,
+        })
+      console.log(link)
+      window.location = link
+    },
+  },
+}
 </script>
 
 <style lang="scss">

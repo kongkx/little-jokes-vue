@@ -17,60 +17,60 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import JokeCard from "./JokeCard";
-import ThumbUpIcon from "./ThumbUpIcon";
-import ThumbDownIcon from "./ThumbDownIcon";
-import { votePost } from "../api";
+import { mapGetters } from 'vuex'
+import JokeCard from './JokeCard'
+import ThumbUpIcon from './ThumbUpIcon'
+import ThumbDownIcon from './ThumbDownIcon'
+import { votePost } from '../api'
 
 export default {
-  name: "PostDetail",
+  name: 'PostDetail',
   props: {
     data: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
-      voting: false
-    };
+      voting: false,
+    }
   },
-  computed: mapGetters(["isLoggedIn"]),
+  computed: mapGetters(['isLoggedIn']),
   components: {
     JokeCard,
     ThumbUpIcon,
-    ThumbDownIcon
+    ThumbDownIcon,
   },
   methods: {
     vote(voteType) {
       if (!this.isLoggedIn) {
         this.$router.push({
-          name: "login",
+          name: 'login',
           query: {
-            next: this.$route.fullPath
-          }
-        });
+            next: this.$route.fullPath,
+          },
+        })
       } else {
-        this.voting = true;
+        this.voting = true
         votePost(this.data.id, {
-          vote_type: voteType
+          vote_type: voteType,
         })
           .then(() => {
-            this.$toasted.show("投票成功", {
-              duration: 2000
-            });
-            this.voting = false;
+            this.$toasted.show('投票成功', {
+              duration: 2000,
+            })
+            this.voting = false
           })
           .catch(err => {
             this.$toasted.error(err.message, {
-              duration: 2000
-            });
-            this.voting = false;
-          });
+              duration: 2000,
+            })
+            this.voting = false
+          })
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss">

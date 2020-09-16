@@ -6,38 +6,38 @@
 </template>
 
 <script>
-import PageHeader from "../components/PageHeader";
-import CollectionList from "../components/CollectionList";
-import { fetchUserCollection } from "../api";
+import PageHeader from '../components/PageHeader'
+import CollectionList from '../components/CollectionList'
+import { fetchUserCollection } from '../api'
 export default {
-  name: "MyCollection",
+  name: 'MyCollection',
   components: {
     PageHeader,
-    CollectionList
+    CollectionList,
   },
   methods: {
     goBack() {
-      const hasHistory = window.history.length > 2;
+      const hasHistory = window.history.length > 2
       if (hasHistory) {
-        this.$router.go(-1);
+        this.$router.go(-1)
       } else {
         this.$router.push({
-          name: "my"
-        });
+          name: 'my',
+        })
       }
     },
     handleDataFetch(params) {
-      const userId = this.$store.getters.currentUserId;
-      return fetchUserCollection(userId, params);
-    }
+      const userId = this.$store.getters.currentUserId
+      return fetchUserCollection(userId, params)
+    },
   },
   mounted() {
-    this.$store.commit("hideNav");
+    this.$store.commit('hideNav')
   },
   beforeDestroy() {
-    this.$store.commit("showNav");
-  }
-};
+    this.$store.commit('showNav')
+  },
+}
 </script>
 
 <style lang="scss">

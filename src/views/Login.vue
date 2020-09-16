@@ -79,14 +79,14 @@
               class="btn btn_primary"
               :disabled="fetchingCode || left > 0"
             >
-              {{ left > 0 ? `${left}秒重试` : "获取验证码" }}
+              {{ left > 0 ? `${left}秒重试` : '获取验证码' }}
             </button>
           </div>
           <div class="l_my_5">
             <router-link
               :to="{
                 name: 'login',
-                query: { type: 'password', next: $route.query.next }
+                query: { type: 'password', next: $route.query.next },
               }"
               replace
               >密码登录</router-link
@@ -114,145 +114,145 @@
 </template>
 
 <script>
-import PageHeader from "../components/PageHeader";
-import ThirdPartyLogin from "../components/ThirdPartyLogin";
-import AuthAppLogo from "../components/AuthAppLogo";
-import { loginWithPassword, loginWithCode, sendLoginCode } from "../api";
+import PageHeader from '../components/PageHeader'
+import ThirdPartyLogin from '../components/ThirdPartyLogin'
+import AuthAppLogo from '../components/AuthAppLogo'
+import { loginWithPassword, loginWithCode, sendLoginCode } from '../api'
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
     PageHeader,
     ThirdPartyLogin,
-    AuthAppLogo
+    AuthAppLogo,
   },
   data: function() {
     return {
-      callingCode: "+86",
-      phone: "",
-      password: "",
-      code: "",
+      callingCode: '+86',
+      phone: '',
+      password: '',
+      code: '',
       left: 0,
       submitting: false,
       fetchingCode: false,
-      codeFetchedAt: undefined
+      codeFetchedAt: undefined,
       // `timer`, `left` not reactive
-    };
+    }
   },
   methods: {
     goBack() {
-      this.$root.goBack();
+      this.$root.goBack()
     },
     sendCode() {
       if (!this.phone.trim()) {
-        alert("请输入手机号码");
-        return;
+        alert('请输入手机号码')
+        return
       }
-      this.fetchingCode = true;
+      this.fetchingCode = true
       sendLoginCode({
-        phone: `${this.callingCode}${this.phone.trim()}`
+        phone: `${this.callingCode}${this.phone.trim()}`,
       })
         .then(() => {
-          this.codeFetchedAt = Date.now();
-          this.fetchingCode = false;
-          this.startCountDown();
+          this.codeFetchedAt = Date.now()
+          this.fetchingCode = false
+          this.startCountDown()
         })
         .catch(err => {
-          this.fetchingCode = false;
-          alert(err.message);
-        });
+          this.fetchingCode = false
+          alert(err.message)
+        })
     },
     loginWithPassword() {
       if (!this.phone.trim()) {
-        alert("请输入手机号码");
-        return;
+        alert('请输入手机号码')
+        return
       }
       if (!this.password.trim()) {
-        alert("请输入密码");
-        return;
+        alert('请输入密码')
+        return
       }
-      this.submitting = true;
+      this.submitting = true
       loginWithPassword({
         phone: `${this.callingCode}${this.phone.trim()}`,
-        password: this.password.trim()
+        password: this.password.trim(),
       })
         .then(res => {
-          this.submitting = false;
-          this.loginSuccess(res);
+          this.submitting = false
+          this.loginSuccess(res)
         })
         .catch(err => {
-          this.submitting = false;
-          alert(err.message || err.code);
-        });
+          this.submitting = false
+          alert(err.message || err.code)
+        })
     },
     loginWithCode() {
       if (!this.phone.trim()) {
-        alert("请输入手机号码");
-        return;
+        alert('请输入手机号码')
+        return
       }
       if (!this.code.trim()) {
-        alert("请输入验证码");
-        return;
+        alert('请输入验证码')
+        return
       }
-      this.submitting = true;
+      this.submitting = true
       loginWithCode({
         phone: `${this.callingCode}${this.phone.trim()}`,
-        code: this.code.trim()
+        code: this.code.trim(),
       })
         .then(res => {
-          this.submitting = false;
-          this.loginSuccess(res);
+          this.submitting = false
+          this.loginSuccess(res)
         })
         .catch(err => {
-          this.submitting = false;
+          this.submitting = false
           if (err.message) {
-            alert(err.message);
+            alert(err.message)
           }
-        });
+        })
     },
     loginSuccess(res) {
-      this.$store.dispatch("setAuthInfo", {
+      this.$store.dispatch('setAuthInfo', {
         user: res.data,
-        api_token: res.meta.api_token
-      });
-      this.$router.replace(this.$route.query.next || "/my");
+        api_token: res.meta.api_token,
+      })
+      this.$router.replace(this.$route.query.next || '/my')
     },
     updateCountDownLeft() {
       if (!this.codeFetchedAt) {
-        return;
+        return
       }
       const left = Math.max(
         Math.floor(this.resentLimit - (Date.now() - this.codeFetchedAt) / 1000),
         0
-      );
-      this.left = left;
+      )
+      this.left = left
     },
     startCountDown() {
-      var vm = this;
+      var vm = this
       vm.timer = setInterval(() => {
-        vm.updateCountDownLeft();
+        vm.updateCountDownLeft()
         if (vm.left <= 0) {
-          clearInterval(vm.timer);
-          vm.timer = undefined;
+          clearInterval(vm.timer)
+          vm.timer = undefined
         }
-      }, 1000);
-      vm.updateCountDownLeft();
-    }
+      }, 1000)
+      vm.updateCountDownLeft()
+    },
   },
   created() {
-    this.timer = undefined;
-    this.resentLimit = 60;
+    this.timer = undefined
+    this.resentLimit = 60
   },
   mounted() {
-    this.$store.commit("hideNav");
+    this.$store.commit('hideNav')
     this.$nextTick(() => {
-      this.$refs.phoneInput && this.$refs.phoneInput.focus();
-    });
+      this.$refs.phoneInput && this.$refs.phoneInput.focus()
+    })
   },
   destroyed() {
-    this.$store.commit("showNav");
-  }
-};
+    this.$store.commit('showNav')
+  },
+}
 </script>
 
 <style lang="scss">

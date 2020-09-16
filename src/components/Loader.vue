@@ -9,25 +9,25 @@
 </template>
 <script>
 export default {
-  name: "loader",
+  name: 'loader',
   props: {
     inline: {
-      type: Boolean
+      type: Boolean,
     },
     size: {
       type: Number,
-      default: 24
-    }
+      default: 24,
+    },
   },
   computed: {
     sizeStyle() {
       return {
         width: `${this.size}px`,
-        height: `${this.size}px`
-      };
-    }
-  }
-};
+        height: `${this.size}px`,
+      }
+    },
+  },
+}
 </script>
 <style lang="scss">
 .c-loader {
@@ -59,14 +59,14 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  content: "";
+  content: '';
 }
 .c-loader:after {
   background: var(--body-background-color);
   width: 75%;
   height: 75%;
   border-radius: 50%;
-  content: "";
+  content: '';
   margin: auto;
   position: absolute;
   top: 0;

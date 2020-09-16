@@ -12,36 +12,36 @@
 </template>
 
 <script>
-import PageHeader from "../components/PageHeader";
-import { loginWithOauthCode } from "../api";
+import PageHeader from '../components/PageHeader'
+import { loginWithOauthCode } from '../api'
 export default {
-  name: "OauthHandling",
+  name: 'OauthHandling',
   components: {
-    PageHeader
+    PageHeader,
   },
   methods: {
     goBack() {
-      this.$root.goBack();
-    }
+      this.$root.goBack()
+    },
   },
   mounted() {
-    this.$store.commit("hideNav");
+    this.$store.commit('hideNav')
     if (!this.$route.query.error) {
       loginWithOauthCode(this.$route.params.provider, this.$route.query)
         .then(res => {
-          this.$store.dispatch("setAuthInfo", {
+          this.$store.dispatch('setAuthInfo', {
             user: res.data,
-            api_token: res.meta.api_token
-          });
-          this.$router.replace(this.$route.query.next || "/my");
+            api_token: res.meta.api_token,
+          })
+          this.$router.replace(this.$route.query.next || '/my')
         })
         .catch(err => {
-          alert(err.message);
-        });
+          alert(err.message)
+        })
     }
   },
   destroyed() {
-    this.$store.commit("showNav");
-  }
-};
+    this.$store.commit('showNav')
+  },
+}
 </script>

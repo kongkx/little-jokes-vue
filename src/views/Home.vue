@@ -27,52 +27,52 @@
 </template>
 
 <script>
-import PageHeader from "../components/PageHeader";
-import JokeList from "../components/JokeList";
-import AuthAppLogo from "../components/AuthAppLogo";
-import { fetchLatestPost, fetchHottestPost } from "../api";
+import PageHeader from '../components/PageHeader'
+import JokeList from '../components/JokeList'
+import AuthAppLogo from '../components/AuthAppLogo'
+import { fetchLatestPost, fetchHottestPost } from '../api'
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     PageHeader,
     JokeList,
-    AuthAppLogo
+    AuthAppLogo,
   },
   data: function() {
     return {
       mescroll: null,
       mescrollDown: {},
       mescrollUp: {
-        callback: this.upCallback
+        callback: this.upCallback,
       },
-      data: []
-    };
+      data: [],
+    }
   },
   computed: {
     currentTab() {
-      return this.$route.query.tab || "latest";
+      return this.$route.query.tab || 'latest'
     },
     handleDataFetch() {
-      if (this.currentTab === "latest") {
-        return fetchLatestPost;
+      if (this.currentTab === 'latest') {
+        return fetchLatestPost
       }
-      return fetchHottestPost;
-    }
+      return fetchHottestPost
+    },
   },
   methods: {
     setActiveTab(tab) {
       if (tab !== this.currentTab) {
         this.$router.push({
-          name: "home",
+          name: 'home',
           query: {
-            tab
-          }
-        });
+            tab,
+          },
+        })
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss">
@@ -115,7 +115,7 @@ export default {
       .tabItem__label {
         font-weight: bold;
         &::after {
-          content: "";
+          content: '';
           display: block;
           position: absolute;
           left: 0;

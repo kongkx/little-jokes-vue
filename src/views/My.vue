@@ -13,26 +13,26 @@
 </template>
 
 <script>
-import PageHeader from "../components/PageHeader";
+import PageHeader from '../components/PageHeader'
 
 export default {
   components: {
-    PageHeader
+    PageHeader,
   },
   methods: {
     navigateToCollection() {
       this.$router.push({
-        name: "my-collection"
-      });
+        name: 'my-collection',
+      })
     },
     logout() {
-      if (confirm("确定退出登录？")) {
-        this.$store.dispatch("resetAuthInfo");
-        this.$router.replace({ name: "login" });
+      if (confirm('确定退出登录？')) {
+        this.$store.dispatch('resetAuthInfo')
+        this.$router.replace({ name: 'login' })
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss">

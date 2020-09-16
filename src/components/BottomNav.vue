@@ -43,18 +43,18 @@
 </template>
 
 <script>
-import ShakeIcon from "./ShakeIcon";
-import HomeIcon from "./HomeIcon";
-import MyIcon from "./MyIcon";
+import ShakeIcon from './ShakeIcon'
+import HomeIcon from './HomeIcon'
+import MyIcon from './MyIcon'
 
 export default {
-  name: "BottomNav",
+  name: 'BottomNav',
   components: {
     ShakeIcon,
     HomeIcon,
-    MyIcon
-  }
-};
+    MyIcon,
+  },
+}
 </script>
 
 <style lang="scss">

@@ -6,42 +6,42 @@
 </template>
 
 <script>
-import { getPost } from "../api";
-import PageHeader from "../components/PageHeader";
-import PostDetail from "../components/PostDetail";
+import { getPost } from '../api'
+import PageHeader from '../components/PageHeader'
+import PostDetail from '../components/PostDetail'
 
 export default {
-  name: "PostPage",
+  name: 'PostPage',
   components: {
     PostDetail,
-    PageHeader
+    PageHeader,
   },
   data: function() {
     return {
       data: null,
       fetching: false,
-      fetchError: null
-    };
+      fetchError: null,
+    }
   },
   methods: {
     goBack() {
-      this.$root.goBack();
-    }
+      this.$root.goBack()
+    },
   },
   mounted() {
-    const postId = this.$route.params.id;
-    this.fetching = true;
+    const postId = this.$route.params.id
+    this.fetching = true
     getPost(postId)
       .then(res => {
-        this.fetching = false;
-        this.data = res.data;
+        this.fetching = false
+        this.data = res.data
       })
       .catch(err => {
-        this.fetching = false;
-        this.fetchError = err;
-      });
-  }
-};
+        this.fetching = false
+        this.fetchError = err
+      })
+  },
+}
 </script>
 
 <style lang="scss">

@@ -10,21 +10,21 @@
 </template>
 
 <script>
-import BackIcon from "./BackIcon";
+import BackIcon from './BackIcon'
 export default {
-  name: "PageHeader",
+  name: 'PageHeader',
   props: {
     title: {
-      type: String
+      type: String,
     },
     backButton: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   components: {
-    BackIcon
-  }
-};
+    BackIcon,
+  },
+}
 </script>
 
 <style lang="scss">

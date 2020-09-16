@@ -25,55 +25,55 @@
 </template>
 
 <script>
-import { reportPost } from "../api";
+import { reportPost } from '../api'
 export default {
-  name: "PostReportForm",
+  name: 'PostReportForm',
   props: {
     postId: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      description: "",
+      description: '',
       submitting: false,
-      maxLength: 20
-    };
+      maxLength: 20,
+    }
   },
   computed: {
     inputCount() {
-      return this.description.trim().length;
-    }
+      return this.description.trim().length
+    },
   },
   methods: {
     assertMaxChars() {
       if (this.description.length >= this.maxLength) {
-        this.description = this.description.substring(0, this.maxLength);
+        this.description = this.description.substring(0, this.maxLength)
       }
     },
     handleSubmit() {
       if (!this.description) {
-        alert("请填入举报理由");
-        return;
+        alert('请填入举报理由')
+        return
       }
-      this.submitting = true;
+      this.submitting = true
       reportPost(this.postId, {
-        description: this.description
+        description: this.description,
       })
         .then(() => {
-          this.submitting = false;
-          this.$emit("submitted");
+          this.submitting = false
+          this.$emit('submitted')
         })
         .catch(err => {
-          this.submitting = false;
+          this.submitting = false
           if (err.message) {
-            alert(err.message);
+            alert(err.message)
           }
-        });
-    }
-  }
-};
+        })
+    },
+  },
+}
 </script>
 
 <style lang="scss">
