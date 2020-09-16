@@ -1,4 +1,4 @@
-# super-jokes
+# little-jokes
 
 ## Project setup
 ```
