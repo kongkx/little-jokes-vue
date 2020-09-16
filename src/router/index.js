@@ -1,15 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
-import Home from '../views/Home.vue'
-import Shake from '../views/Shake.vue'
-import My from '../views/My.vue'
-import MyCollection from '../views/MyCollection.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
 import Terms from '../views/Terms.vue'
-import Post from '../views/Post.vue'
-import OauthHandling from '../views/OauthHandling.vue'
 
 Vue.use(VueRouter)
 
@@ -17,17 +9,17 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home,
+    component: () => import('@/views/Home.vue'),
   },
   {
     path: '/shake',
     name: 'shake',
-    component: Shake,
+    component: () => import('@/views/Shake.vue'),
   },
   {
     path: '/my',
     name: 'my',
-    component: My,
+    component: () => import('@/views/My.vue'),
     beforeEnter: (to, from, next) => {
       if (!store.getters.isLoggedIn) {
         next({ name: 'login', query: { next: to.fullPath } })
@@ -39,12 +31,12 @@ const routes = [
   {
     path: '/my-collection',
     name: 'my-collection',
-    component: MyCollection,
+    component: () => import('@/views/MyCollection.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    component: Login,
+    component: () => import('@/views/Login.vue'),
     beforeEnter: (to, from, next) => {
       if (store.getters.isLoggedIn) {
         if (to.query.next) {
@@ -60,7 +52,7 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: Register,
+    component: () => import('@/views/Register.vue'),
     beforeEnter: (to, from, next) => {
       if (store.getters.isLoggedIn) {
         if (to.query.next) {
@@ -76,7 +68,7 @@ const routes = [
   {
     path: '/oauth/:provider',
     name: 'oauth',
-    component: OauthHandling,
+    component: () => import('@/views/OauthHandling.vue'),
   },
   {
     path: '/terms',
@@ -86,7 +78,7 @@ const routes = [
   {
     path: '/posts/:id',
     name: 'post',
-    component: Post,
+    component: () => import('@/views/Post.vue'),
   },
   {
     path: '*',
