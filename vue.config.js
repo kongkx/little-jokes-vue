@@ -20,7 +20,15 @@ module.exports = {
     disableHostCheck: true,
   },
   chainWebpack: config => {
-    config.output.filename('[name].[hash].js').end()
+    config.output
+      .filename('[name].[hash].js')
+      .end()
+      .externals({
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        vuex: 'Vuex',
+        axios: 'axios',
+      })
   },
   // configureWebpack: (config) => {
   //   config.output.filename = '[name].[hash].js'
