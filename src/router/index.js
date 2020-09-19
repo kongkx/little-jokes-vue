@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
 import Terms from '../views/Terms.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -9,7 +10,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: () => import('@/views/Home.vue'),
+    component: Home,
   },
   {
     path: '/shake',
