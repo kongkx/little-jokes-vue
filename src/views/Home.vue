@@ -1,6 +1,8 @@
 <template>
-  <div class="Home">
-    <PageHeader title="小小笑话"></PageHeader>
+  <page class="Home">
+    <template v-slot:header>
+      <PageHeader title="小小笑话"></PageHeader>
+    </template>
     <div class="Home__content">
       <div class="tabs">
         <div class="tabItem" :class="{ 'is-active': currentTab === 'latest' }">
@@ -23,7 +25,7 @@
     <div>
       <AuthAppLogo style="position: fixed; top: 100%; opacity: 0;" />
     </div>
-  </div>
+  </page>
 </template>
 
 <script>
@@ -77,13 +79,8 @@ export default {
 
 <style lang="scss">
 .Home {
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
   &__content {
-    flex: 1;
-    overflow: auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;

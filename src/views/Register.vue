@@ -1,6 +1,8 @@
 <template>
-  <div class="Register">
-    <PageHeader title="注册" backButton @back="goBack" />
+  <page class="Register">
+    <template v-slot:header>
+      <PageHeader title="注册" backButton @back="goBack" />
+    </template>
     <div class="Register__content">
       <div class="Register__logoWrap">
         <AuthAppLogo class="Register__logo" />
@@ -61,7 +63,7 @@
       </div>
       <ThirdPartyLogin />
     </div>
-  </div>
+  </page>
 </template>
 
 <script>
@@ -180,12 +182,8 @@ export default {
 
 <style lang="scss">
 .Register {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
   &__content {
-    flex: 1;
+    height: 100%;
     overflow: auto;
     display: flex;
     flex-direction: column;

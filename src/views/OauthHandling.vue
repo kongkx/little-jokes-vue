@@ -1,14 +1,16 @@
 <template>
-  <div class="Page">
-    <PageHeader
-      :title="$route.query.error ? 'Error' : 'Authorizing'"
-      :backButton="!!$route.query.error"
-      @back="goBack"
-    />
+  <page>
+    <template v-slot:header>
+      <PageHeader
+        :title="$route.query.error ? 'Error' : 'Authorizing'"
+        :backButton="!!$route.query.error"
+        @back="goBack"
+      />
+    </template>
     <div v-if="!!$route.query.error" class="l_mx_12 l_mt_12">
       {{ $route.query.error_description }}
     </div>
-  </div>
+  </page>
 </template>
 
 <script>

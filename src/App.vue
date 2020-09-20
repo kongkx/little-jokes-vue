@@ -144,4 +144,31 @@ div {
   background-color: var(--primary-color);
   color: var(--text-color);
 }
+// login form related
+.FloatForm {
+  padding: 24px 24px 8px 24px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+}
+.FormControl {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  &__input {
+    width: 100%;
+    border: none;
+    height: 42px;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 12px;
+  }
+}
+.PhoneWidget {
+  display: flex;
+  &__regionSelect {
+    border-right: 1px solid var(--border-color);
+    padding: 10px 16px;
+  }
+}
 </style>

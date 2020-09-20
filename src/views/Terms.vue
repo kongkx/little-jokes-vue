@@ -1,7 +1,18 @@
 <template>
-  <div class="Terms">
-    <PageHeader title="用户协议" backButton @back="goBack" />
-  </div>
+  <page class="Terms">
+    <template v-slot:header>
+      <PageHeader title="用户协议" backButton @back="goBack" />
+    </template>
+    <div class="l_mx_12">
+      <p>
+        这个是简单的开源 vue 项目，源码：
+        <br />
+        <a target="_blank" href="https://github.com/kucial/little-jokes-vue"
+          >little-jokes-vue</a
+        >
+      </p>
+    </div>
+  </page>
 </template>
 
 <script>

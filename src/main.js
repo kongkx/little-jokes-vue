@@ -5,11 +5,14 @@ import Toasted from 'vue-toasted'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Page from './components/Page.vue'
 
 Vue.use(PortalVue)
 Vue.use(Toasted)
 
 Vue.config.productionTip = false
+
+Vue.component('page', Page)
 
 new Vue({
   router,

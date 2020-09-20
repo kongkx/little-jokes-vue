@@ -1,6 +1,8 @@
 <template>
-  <div class="Shake">
-    <PageHeader title="摇一摇" />
+  <page class="Shake">
+    <template v-slot:header>
+      <PageHeader title="摇一摇" />
+    </template>
     <div v-if="isFetching" class="Shake__loading">
       <loader inline />
     </div>
@@ -22,7 +24,7 @@
     <div class="Shake__main" v-else>
       <PostDetail :data="post" />
     </div>
-  </div>
+  </page>
 </template>
 
 <script>
@@ -110,6 +112,7 @@ export default {
     if (this.onceTouched) {
       shakeService.start()
     }
+    this.handleShake()
   },
   updated() {
     setCache(`route.${this.$route.name}`, this.$data)
@@ -124,12 +127,8 @@ export default {
 
 <style lang="scss">
 .Shake {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
   &__placeholder {
-    flex: 1;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,7 +140,7 @@ export default {
     text-align: center;
   }
   &__main {
-    flex: 1;
+    height: 100%;
   }
 }
 </style>

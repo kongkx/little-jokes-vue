@@ -1,8 +1,10 @@
 <template>
-  <div class="MyCollection">
-    <PageHeader title="我的收藏" backButton @back="goBack" />
+  <page class="MyCollection">
+    <template v-slot:header>
+      <PageHeader title="我的收藏" backButton @back="goBack" />
+    </template>
     <collection-list class="MyCollection__list" :fetchData="handleDataFetch" />
-  </div>
+  </page>
 </template>
 
 <script>
@@ -40,11 +42,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.MyCollection {
-  height: 100%;
-  overflow: hidden;
-  &__list {
-  }
-}
-</style>
+<style lang="scss"></style>

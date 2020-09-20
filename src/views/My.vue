@@ -1,6 +1,8 @@
 <template>
-  <div class="My">
-    <PageHeader title="我的" />
+  <page class="My">
+    <template v-slot:header>
+      <PageHeader title="我的" />
+    </template>
     <div class="My__content">
       <div class="LineItemList l_mt_16">
         <div class="LineItem" @click="navigateToCollection">
@@ -9,7 +11,7 @@
       </div>
       <button class="My__logout" @click="logout">退出登录</button>
     </div>
-  </div>
+  </page>
 </template>
 
 <script>
@@ -42,7 +44,7 @@ export default {
   flex-direction: column;
   overflow: hidden;
   &__content {
-    flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
     overflow: auto;

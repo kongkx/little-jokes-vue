@@ -1,8 +1,10 @@
 <template>
-  <div class="PostPage">
-    <PageHeader backButton @back="goBack" />
+  <page class="PostPage">
+    <template v-slot:header>
+      <PageHeader backButton @back="goBack" />
+    </template>
     <PostDetail v-if="!!data" :data="data" />
-  </div>
+  </page>
 </template>
 
 <script>
@@ -44,8 +46,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.PostPage {
-  height: 100%;
-}
-</style>
+<style lang="scss"></style>

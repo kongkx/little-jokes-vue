@@ -30,7 +30,7 @@ export default {
 <style lang="scss">
 .PageHeader {
   background-color: var(--primary-color);
-  height: var(--page-header-height); // TODO: pwa heading color
+  height: calc(var(--page-header-height) + 20px); // TODO: pwa heading color
   display: flex;
   justify-content: center;
   position: fixed;
@@ -38,6 +38,7 @@ export default {
   top: 0;
   width: 100%;
   z-index: 1000;
+  margin-top: -20px;
 
   &__left {
     position: absolute;

@@ -1,6 +1,8 @@
 <template>
-  <div class="Login">
-    <PageHeader title="登录" backButton @back="goBack" />
+  <page class="Login">
+    <template v-slot:header>
+      <PageHeader title="登录" backButton @back="goBack" />
+    </template>
     <div class="Login__content">
       <div class="Login__logoWrap">
         <AuthAppLogo class="Login__logo" />
@@ -110,7 +112,7 @@
       </div>
       <ThirdPartyLogin class="Login__3rdParty" />
     </div>
-  </div>
+  </page>
 </template>
 
 <script>
@@ -257,12 +259,8 @@ export default {
 
 <style lang="scss">
 .Login {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
   &__content {
-    flex: 1;
+    height: 100%;
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -282,32 +280,6 @@ export default {
   }
   &__3rdParty {
     margin-top: 14px;
-  }
-}
-.FloatForm {
-  padding: 24px 24px 8px 24px;
-  background-color: white;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-  border-radius: 4px;
-}
-.FormControl {
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  &__input {
-    width: 100%;
-    border: none;
-    height: 42px;
-    font-size: 16px;
-    box-sizing: border-box;
-    padding-left: 16px;
-    padding-right: 12px;
-  }
-}
-.PhoneWidget {
-  display: flex;
-  &__regionSelect {
-    border-right: 1px solid var(--border-color);
-    padding: 10px 16px;
   }
 }
 </style>
