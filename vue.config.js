@@ -22,34 +22,14 @@ module.exports = {
   chainWebpack: config => {
     config.output.filename('[name].[hash].js').end()
   },
-  // configureWebpack: (config) => {
-  //   config.output.filename = '[name].[hash].js'
-  // },
-  // configureWebpack: (config) => {
-  //   if (process.env.NODE_ENV !== 'production') {
-  //     return {
-  //       plugins: [
-  //         new BrowserSyncPlugin(
-  //           // BrowserSync options
-  //           {
-  //             // browse to http://localhost:3000/ during development
-  //             host: 'localhost',
-  //             https: true,
-  //             port: 4000,
-  //             // proxy the Webpack Dev Server endpoint
-  //             // (which should be serving on http://localhost:3100/)
-  //             // through BrowserSync
-  //             proxy: 'https://localhost:8080/',
-  //           },
-  //           // plugin options
-  //           {
-  //             // prevent BrowserSync from reloading the page
-  //             // and let Webpack Dev Server take care of this
-  //             reload: false,
-  //           }
-  //         ),
-  //       ],
-  //     }
-  //   }
-  // },
+  pwa: {
+    name: '小小笑话',
+    themeColor: '#fdcd31',
+    msTileColor: '#fdcd31',
+    appleMobileWebAppCapable: 'yes',
+    // appleMobileWebAppStatusBarStyle: 'black-translucent',
+    manifestOptions: {
+      background_color: '#fdcd31',
+    },
+  },
 }

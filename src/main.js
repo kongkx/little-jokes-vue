@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Page from './components/Page.vue'
+import './registerServiceWorker'
 
 Vue.use(PortalVue)
 Vue.use(Toasted)

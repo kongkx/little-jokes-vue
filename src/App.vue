@@ -54,6 +54,10 @@ body {
   color: var(--text-color);
   font-family: sans-serif;
   height: 100%;
+  // native-like pwa
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 a {
   color: var(--link-color);
