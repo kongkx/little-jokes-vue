@@ -8,52 +8,7 @@
         <AuthAppLogo class="Login__logo" />
       </div>
       <div class="Login__form">
-        <div v-if="$route.query.type === 'password'" class="FloatForm">
-          <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
-            <span class="PhoneWidget__regionSelect">{{ callingCode }}</span>
-            <input
-              v-model="phone"
-              type="text"
-              inputmode="numeric"
-              class="PhoneWidget__input FormControl__input"
-              placeholder="输入手机号码"
-              ref="phoneInput"
-            />
-          </div>
-          <div style="display: flex; margin-bottom: 20px;">
-            <div class="FormControl" style="flex: 1;">
-              <input
-                v-model="password"
-                type="text"
-                class="FormControl__input"
-                placeholder="输入密码"
-              />
-            </div>
-          </div>
-          <div class="l_my_5">
-            <router-link
-              :to="{ name: 'login', query: { next: $route.query.next } }"
-              replace
-              >验证码登录</router-link
-            >
-          </div>
-          <button
-            class="btn btn_primary btn_block l_mt_12"
-            @click="loginWithPassword"
-            :disabled="submitting"
-            type="submit"
-          >
-            登录
-          </button>
-          <div class="btn l_mt_5" style="line-height: 44px; text-align:center;">
-            <router-link
-              :to="{ name: 'register', query: { next: $route.query.next } }"
-              replace
-              >注册</router-link
-            >
-          </div>
-        </div>
-        <div v-else class="FloatForm">
+        <div v-if="$route.query.type === 'code'" class="FloatForm">
           <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
             <span class="PhoneWidget__regionSelect">{{ callingCode }}</span>
             <input
@@ -98,6 +53,54 @@
             class="btn btn_primary btn_block l_mt_12"
             @click="loginWithCode"
             :disabled="submitting"
+          >
+            登录
+          </button>
+          <div class="btn l_mt_5" style="line-height: 44px; text-align:center;">
+            <router-link
+              :to="{ name: 'register', query: { next: $route.query.next } }"
+              replace
+              >注册</router-link
+            >
+          </div>
+        </div>
+        <div v-else class="FloatForm">
+          <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
+            <span class="PhoneWidget__regionSelect">{{ callingCode }}</span>
+            <input
+              v-model="phone"
+              type="text"
+              inputmode="numeric"
+              class="PhoneWidget__input FormControl__input"
+              placeholder="输入手机号码"
+              ref="phoneInput"
+            />
+          </div>
+          <div style="display: flex; margin-bottom: 20px;">
+            <div class="FormControl" style="flex: 1;">
+              <input
+                v-model="password"
+                type="password"
+                class="FormControl__input"
+                placeholder="输入密码"
+              />
+            </div>
+          </div>
+          <div class="l_my_5">
+            <router-link
+              :to="{
+                name: 'login',
+                query: { next: $route.query.next, type: 'code' },
+              }"
+              replace
+              >验证码登录</router-link
+            >
+          </div>
+          <button
+            class="btn btn_primary btn_block l_mt_12"
+            @click="loginWithPassword"
+            :disabled="submitting"
+            type="submit"
           >
             登录
           </button>

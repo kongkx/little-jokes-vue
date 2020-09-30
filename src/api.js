@@ -151,6 +151,14 @@ export const registerWithCode = async data => {
   })
 }
 
+export const registerWithPassword = async data => {
+  return request({
+    url: '/api/auth/register/with_phone_password',
+    method: 'POST',
+    data,
+  })
+}
+
 export const fetchUserCollection = (userId, params) => {
   return request({
     url: `/api/users/${userId}/liked-posts`,
