@@ -21,6 +21,11 @@ module.exports = {
   },
   chainWebpack: config => {
     config.output.filename('[name].[hash].js').end()
+    if (process.env.npm_config_report) {
+      config
+        .plugin('webpack-bundle-analyzer')
+        .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+    }
   },
   pwa: {
     name: '小小笑话',
