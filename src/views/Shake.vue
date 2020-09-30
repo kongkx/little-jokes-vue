@@ -112,7 +112,6 @@ export default {
     if (this.onceTouched) {
       shakeService.start()
     }
-    this.handleShake()
   },
   updated() {
     setCache(`route.${this.$route.name}`, this.$data)
