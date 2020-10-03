@@ -252,10 +252,7 @@ export default {
     getShareInfo() {
       return {
         title: `小小笑话 -- ${this.data.content.substring(0, 4)}...`,
-        text:
-          this.data.content.length > 50
-            ? this.data.content.substring(0, 50) + '...'
-            : this.data.content.substring,
+        text: this.data.content,
         url: this.getShareLink(),
         image_url: window.location.origin + '/AppIcon.png',
       }
@@ -369,7 +366,6 @@ export default {
     handleQQShare() {
       this.closeSharePanel()
       const share = this.getShareInfo()
-      console.log(share)
       const path =
         'https://connect.qq.com/widget/shareqq/index.html?' +
         'url=' +
