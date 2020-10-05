@@ -56,15 +56,11 @@ export default {
           vote_type: voteType,
         })
           .then(() => {
-            this.$toasted.show('投票成功', {
-              duration: 2000,
-            })
+            this.$toasted.show('投票成功')
             this.voting = false
           })
           .catch(err => {
-            this.$toasted.error(err.message, {
-              duration: 2000,
-            })
+            this.$toasted.error(err.message)
             this.voting = false
           })
       }

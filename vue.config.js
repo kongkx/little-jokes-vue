@@ -13,7 +13,8 @@ module.exports = {
     hotOnly: false,
     proxy: {
       '/api': {
-        target: 'http://localhost',
+        // target: 'http://localhost',
+        target: 'https://jokes.kongkx.com',
         changeOrigin: false,
       },
     },

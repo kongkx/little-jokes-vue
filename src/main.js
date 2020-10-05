@@ -6,10 +6,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Page from './components/Page.vue'
+import Longpress from './modules/longpress'
 import './registerServiceWorker'
 
 Vue.use(PortalVue)
-Vue.use(Toasted)
+Vue.use(Toasted, {
+  duration: 2000,
+})
+Vue.use(Longpress)
 
 Vue.config.productionTip = false
 

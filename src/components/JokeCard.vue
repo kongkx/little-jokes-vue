@@ -5,6 +5,7 @@
       @touchstart="handleTouchStart"
       @touchend="handleTouchEnd"
       @touchmove="handleTouchMove"
+      v-longpress="copyContentToClipboard"
       :style="swipeAnimation"
       :class="{ hasArchived: data.like && data.like.archived_at }"
     >
@@ -298,17 +299,13 @@ export default {
       this.closeSharePanel()
       navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
         if (result.state === 'denied') {
-          this.$toasted.error('无法获取粘贴板写入权限', {
-            duration: 3000,
-          })
+          this.$toasted.error('无法取得粘贴板写入权限')
         } else if (result.state == 'granted') {
           navigator.clipboard
             .writeText(vm.getShareLink())
             .then(() => {
               const msg = '链接已复制'
-              this.$toasted.show(msg, {
-                duration: 3000,
-              })
+              this.$toasted.show(msg)
             })
             .catch(err => {
               alert(err.message)
@@ -324,17 +321,13 @@ export default {
           .query({ name: 'clipboard-write' })
           .then(result => {
             if (result.state === 'denied') {
-              this.$toasted.error('无法获取粘贴板写入权限', {
-                duration: 3000,
-              })
+              this.$toasted.error('无法取得粘贴板写入权限')
             } else if (result.state == 'granted') {
               navigator.clipboard
                 .writeText(vm.getShareLink())
                 .then(() => {
                   const msg = '链接已复制，请打开微信后，粘贴后发送'
-                  this.$toasted.show(msg, {
-                    duration: 3000,
-                  })
+                  this.$toasted.show(msg)
                 })
                 .catch(err => {
                   alert(err.message)
@@ -376,6 +369,24 @@ export default {
         '&summary=' +
         share.text
       window.open(path)
+    },
+    copyContentToClipboard() {
+      var vm = this
+      navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
+        if (result.state == 'granted') {
+          /* write to the clipboard now */
+          navigator.clipboard.writeText(this.data.content).then(
+            function() {
+              vm.$toasted.show('内容已复制到粘贴板')
+            },
+            function() {
+              vm.$toasted.error('内容复制到粘贴板失败')
+            }
+          )
+        } else if (result.state == 'denied') {
+          vm.$toasted.error('无法取得粘贴板写入权限')
+        }
+      })
     },
     // swipe feature
     handleTouchStart() {

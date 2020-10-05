@@ -38,7 +38,7 @@ export default {
     return {
       description: '',
       submitting: false,
-      maxLength: 20,
+      maxLength: 100,
     }
   },
   computed: {
