@@ -69,6 +69,13 @@ export default {
       }
     },
   },
+  beforeRouteLeave(to, from, next) {
+    if (this.content.trim()) {
+      next(window.confirm('放弃添加新笑话？'))
+    } else {
+      next()
+    }
+  },
 }
 </script>
 

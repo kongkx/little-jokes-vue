@@ -103,7 +103,7 @@ export default {
           id: item.id,
         },
       })
-      console.log(item)
+      return Promise.resolve()
     },
     deleteItem(item) {
       // var vm = this

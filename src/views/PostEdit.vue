@@ -45,6 +45,11 @@ export default {
       fetching: true,
     }
   },
+  computed: {
+    isDirty(vm) {
+      return vm.data && vm.data.content !== vm.content.trim()
+    },
+  },
   methods: {
     handleSubmit() {
       const content = this.content.trim()
@@ -92,6 +97,13 @@ export default {
       .finally(() => {
         this.fetching = false
       })
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.isDirty) {
+      next(window.confirm('放弃修改笑话？'))
+    } else {
+      next()
+    }
   },
 }
 </script>
