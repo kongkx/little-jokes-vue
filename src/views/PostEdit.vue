@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       submitting: false,
+      submitted: false,
       content: '',
       data: null,
       fetchError: null,
@@ -47,7 +48,7 @@ export default {
   },
   computed: {
     isDirty(vm) {
-      return vm.data && vm.data.content !== vm.content.trim()
+      return !vm.submitted && vm.data && vm.data.content !== vm.content.trim()
     },
   },
   methods: {
@@ -58,7 +59,8 @@ export default {
         return
       }
       if (content === this.data.content) {
-        alert('请进行修改后再提交')
+        this.goBack()
+        // alert('请进行修改后再提交')
         return
       }
       this.submitting = true
@@ -67,6 +69,9 @@ export default {
       })
         .then(() => {
           this.submitting = false
+          this.submitted = true
+          this.$toasted.success('修改成功')
+          sessionStorage.setItem('myListUpdatedAt', Date.now())
           this.goBack()
         })
         .catch(() => {
@@ -82,6 +87,11 @@ export default {
           name: 'my',
         })
       }
+    },
+  },
+  watch: {
+    content: function() {
+      this.submitted = false
     },
   },
   created() {

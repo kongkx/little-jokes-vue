@@ -82,7 +82,10 @@ export default {
           // 请求的列表数据
           let arr = res.data
           // 如果是第一页需手动置空列表
-          if (page.num === 1) this.data = []
+          if (page.num === 1) {
+            this.data = []
+            this.fetchedAt = Date.now()
+          }
           // 把请求到的数据添加到列表
           this.data = this.data.concat(arr)
           this.hasContent = res.meta.total > 0
@@ -116,6 +119,20 @@ export default {
           alert(err.message)
         })
     },
+  },
+  activated() {
+    if (
+      this.fetchedAt &&
+      this.fetchedAt < sessionStorage.getItem('myListUpdatedAt')
+    ) {
+      this.upCallback(
+        {
+          num: 1,
+          size: 10,
+        },
+        this.mescroll
+      )
+    }
   },
 }
 </script>
