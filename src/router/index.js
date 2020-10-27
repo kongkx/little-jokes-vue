@@ -60,6 +60,9 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login.vue'),
+    meta: {
+      keepAlive: false,
+    },
     beforeEnter: (to, from, next) => {
       if (store.getters.isLoggedIn) {
         if (to.query.next) {
@@ -76,6 +79,9 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('@/views/Register.vue'),
+    meta: {
+      keepAlive: false,
+    },
     beforeEnter: (to, from, next) => {
       if (store.getters.isLoggedIn) {
         if (to.query.next) {
@@ -92,6 +98,9 @@ const routes = [
     path: '/oauth/:provider',
     name: 'oauth',
     component: () => import('@/views/OauthHandling.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/terms',

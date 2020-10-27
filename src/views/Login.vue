@@ -257,6 +257,15 @@ export default {
   destroyed() {
     this.$store.commit('showNav')
   },
+  activated() {
+    this.$store.commit('hideNav')
+    this.$nextTick(() => {
+      this.$refs.phoneInput && this.$refs.phoneInput.focus()
+    })
+  },
+  deactivated() {
+    this.$store.commit('showNav')
+  },
 }
 </script>
 

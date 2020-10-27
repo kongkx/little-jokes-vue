@@ -32,5 +32,11 @@ export default {
   destroyed() {
     this.$store.commit('showNav')
   },
+  activated() {
+    this.$store.commit('hideNav')
+  },
+  deactivated() {
+    this.$store.commit('showNav')
+  },
 }
 </script>
