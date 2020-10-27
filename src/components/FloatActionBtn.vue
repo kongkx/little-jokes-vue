@@ -21,5 +21,6 @@ export default {
   box-shadow: 1px 2px 3px rgba(128, 128, 128, 0.5);
   right: 36px;
   bottom: 72px;
+  font-size: 0;
 }
 </style>
