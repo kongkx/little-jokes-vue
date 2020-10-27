@@ -35,6 +35,28 @@ const routes = [
     component: () => import('@/views/MyCollection.vue'),
   },
   {
+    path: '/my-posts',
+    name: 'my-posts',
+    component: () => import('@/views/MyPosts.vue'),
+  },
+  {
+    path: '/new-post',
+    name: 'post-create',
+    component: () => import('@/views/PostCreate.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!store.getters.isLoggedIn) {
+        next({ name: 'login', query: { next: to.fullPath } })
+        return
+      }
+      next()
+    },
+  },
+  {
+    path: '/posts/:id/edit',
+    name: 'post-edit',
+    component: () => import('@/views/PostEdit.vue'),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login.vue'),

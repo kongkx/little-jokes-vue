@@ -21,25 +21,31 @@
         :fetchData="handleDataFetch"
         :key="currentTab"
       />
+      <FloatActionBtn v-if="$store.getters.isLoggedIn" @click="initCreatePost">
+        <PlusIcon style="width: 24px; height: 24px;" />
+      </FloatActionBtn>
     </div>
     <div>
+      <!-- TODO: 使用 service worker 进行数据缓存 -->
       <AuthAppLogo style="position: fixed; top: 100%; opacity: 0;" />
     </div>
   </page>
 </template>
 
 <script>
-import PageHeader from '../components/PageHeader'
 import JokeList from '../components/JokeList'
 import AuthAppLogo from '../components/AuthAppLogo'
+import FloatActionBtn from '../components/FloatActionBtn'
+import PlusIcon from '../components/PlusIcon'
 import { fetchLatestPost, fetchHottestPost } from '../api'
 
 export default {
   name: 'Home',
   components: {
-    PageHeader,
     JokeList,
     AuthAppLogo,
+    FloatActionBtn,
+    PlusIcon,
   },
   data: function() {
     return {
@@ -72,6 +78,11 @@ export default {
           },
         })
       }
+    },
+    initCreatePost() {
+      this.$router.push({
+        name: 'post-create',
+      })
     },
   },
 }

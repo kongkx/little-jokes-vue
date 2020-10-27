@@ -6,6 +6,9 @@
       </button>
     </div>
     <span class="PageTitle">{{ title }}</span>
+    <div class="PageHeader__right">
+      <slot name="right"></slot>
+    </div>
   </header>
 </template>
 
@@ -50,6 +53,16 @@ export default {
     border: none;
     min-width: 36px;
     height: 36px;
+    font-size: 16px;
+  }
+  &__right {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    // height: var(--page-header-height);
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
   }
 
   .PageTitle {

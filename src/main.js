@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Page from './components/Page.vue'
+import PageHeader from './components/PageHeader.vue'
 import Longpress from './modules/longpress'
 import './registerServiceWorker'
 
@@ -18,6 +19,7 @@ Vue.use(Longpress)
 Vue.config.productionTip = false
 
 Vue.component('page', Page)
+Vue.component('PageHeader', PageHeader)
 
 new Vue({
   router,

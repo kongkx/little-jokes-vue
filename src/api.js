@@ -65,10 +65,33 @@ export const fetchRandomPost = async params => {
   })
 }
 
+export const createPost = data => {
+  return request({
+    url: '/api/posts',
+    method: 'POST',
+    data,
+  })
+}
+
 export const getPost = async postId => {
   return request({
     url: `/api/posts/${postId}`,
     method: 'GET',
+  })
+}
+
+export const updatePost = (postId, data) => {
+  return request({
+    url: `/api/posts/${postId}`,
+    method: 'PUT',
+    data,
+  })
+}
+
+export const deletePost = postId => {
+  return request({
+    url: `/api/posts/${postId}`,
+    method: 'DELETE',
   })
 }
 
@@ -162,6 +185,14 @@ export const registerWithPassword = async data => {
 export const fetchUserCollection = (userId, params) => {
   return request({
     url: `/api/users/${userId}/liked-posts`,
+    method: 'GET',
+    params,
+  })
+}
+
+export const fetchUserPosts = (userId, params) => {
+  return request({
+    url: `/api/users/${userId}/posts`,
     method: 'GET',
     params,
   })

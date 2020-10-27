@@ -5,6 +5,9 @@
     </template>
     <div class="My__content">
       <div class="LineItemList l_mt_16">
+        <div class="LineItem" @click="navigateToList">
+          <div class="LineItem__title">我的笑话</div>
+        </div>
         <div class="LineItem" @click="navigateToCollection">
           <div class="LineItem__title">我的收藏</div>
         </div>
@@ -25,6 +28,11 @@ export default {
     navigateToCollection() {
       this.$router.push({
         name: 'my-collection',
+      })
+    },
+    navigateToList() {
+      this.$router.push({
+        name: 'my-posts',
       })
     },
     logout() {

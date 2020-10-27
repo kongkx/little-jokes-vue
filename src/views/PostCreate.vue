@@ -1,0 +1,90 @@
+<template>
+  <page class="PostCreate">
+    <template v-slot:header>
+      <PageHeader title="新笑话" backButton @back="goBack">
+        <template v-slot:right>
+          <button
+            class="PageHeader__btn"
+            style="margin-right: 12px;"
+            @click="handleSubmit"
+            :disabled="submitting"
+          >
+            保存
+          </button>
+        </template>
+      </PageHeader>
+    </template>
+    <div class="PostCreate__content">
+      <div class="FieldSet">
+        <textarea
+          class="FormInput"
+          placeholder="内容"
+          style="min-height: 200px;"
+          v-model="content"
+        />
+      </div>
+    </div>
+  </page>
+</template>
+
+<script>
+import { createPost } from '../api'
+export default {
+  name: 'post-create',
+  data() {
+    return {
+      submitting: false,
+      content: '',
+    }
+  },
+  methods: {
+    handleSubmit() {
+      const content = this.content.trim()
+      if (!content) {
+        alert('请输入内容')
+        return
+      }
+      this.submitting = true
+      createPost({
+        content,
+      })
+        .then(() => {
+          this.submitting = false
+          this.$router.replace({
+            name: 'my-posts',
+          })
+        })
+        .catch(() => {
+          this.submitting = false
+        })
+    },
+    goBack() {
+      const hasHistory = window.history.length > 2
+      if (hasHistory) {
+        this.$router.go(-1)
+      } else {
+        this.$router.push({
+          name: 'my',
+        })
+      }
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+.PostCreate {
+  background-color: var(--body-background-color);
+}
+.FormLabel {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.FieldSet {
+  background-color: white;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+</style>

@@ -168,6 +168,14 @@ div {
     padding-right: 12px;
   }
 }
+.FormInput {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  font-family: sans-serif;
+}
 .PhoneWidget {
   display: flex;
   &__regionSelect {

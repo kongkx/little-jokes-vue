@@ -84,6 +84,7 @@
     >
       <button
         class="JokeCardWrap__action"
+        :class="item.modifier ? 'JokeCardWrap__action_' + item.modifier : ''"
         v-for="item in swipeActions"
         :key="item.id"
         @click="
@@ -469,6 +470,11 @@ export default {
       position: absolute;
       z-index: -1;
       background: inherit;
+    }
+
+    &_danger {
+      background-color: var(--danger-color);
+      color: white;
     }
   }
 }
