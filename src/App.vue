@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="app" :class="{ hasBottomNav: showBottomNav }">
-    <router-view />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
     <BottomNav v-if="showBottomNav" />
     <portal-target name="modal"></portal-target>
   </div>
