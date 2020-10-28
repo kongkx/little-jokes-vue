@@ -35,18 +35,15 @@ import PostDetail from '../components/PostDetail'
 import Loader from '../components/Loader'
 
 import shakeService from '../services/shake'
-import { setCache, getCache } from '../services/cache'
 
 export default {
   name: 'Shake',
   data: function(vm) {
-    const cache = getCache(`route.${vm.$route.name}`) || {}
     return {
       post: null,
       isFetching: false,
       fetchedAt: null,
       showInitFeatureHint: !vm.$store.state.device.onceTouched,
-      ...cache,
     }
   },
   computed: mapState({
@@ -112,9 +109,6 @@ export default {
     if (this.onceTouched) {
       shakeService.start()
     }
-  },
-  updated() {
-    setCache(`route.${this.$route.name}`, this.$data)
   },
   beforeDestroy() {
     shakeService.stop()
