@@ -38,6 +38,7 @@ export default {
       },
       data: [],
       hasContent: true,
+      scrollTop: 0,
     }
   },
   methods: {
@@ -71,12 +72,16 @@ export default {
           mescroll.endErr()
         })
     },
+    cacheScrollTop() {
+      this.scrollTop = this.$refs.mescroll.$el.scrollTop
+    },
   },
-  beforeRouteLeave(to, from, next) {
-    // 如果没有配置顶部按钮或isBounce,则beforeRouteLeave不用写
-    // 记录列表滚动的位置,隐藏顶部按钮和isBounce的配置
-    this.$refs.mescroll && this.$refs.mescroll.beforeRouteLeave()
-    next()
+  mounted() {
+    // console.log(this.$refs.mescroll)
+    this.$refs.mescroll.$el.addEventListener('scroll', this.cacheScrollTop)
+  },
+  activated() {
+    this.$refs.mescroll.$el.scrollTop = this.scrollTop
   },
 }
 </script>
