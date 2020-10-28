@@ -17,6 +17,7 @@
     <div class="PostCreate__content">
       <div class="FieldSet">
         <textarea
+          ref="input"
           class="FormInput"
           placeholder="内容"
           style="min-height: 200px;"
@@ -30,7 +31,7 @@
 <script>
 import { createPost } from '../api'
 export default {
-  name: 'post-create',
+  name: 'PostCreate',
   data() {
     return {
       submitting: false,
@@ -68,6 +69,11 @@ export default {
         })
       }
     },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.input.focus()
+    })
   },
   beforeRouteLeave(to, from, next) {
     if (this.content.trim()) {
