@@ -103,17 +103,29 @@ export default {
       }
     },
   },
-  mounted() {
+  shakeServiceInit() {
     window.addEventListener('shake', this.handleShake)
     window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
     if (this.onceTouched) {
       shakeService.start()
     }
   },
-  beforeDestroy() {
+  shakeServiceCleanup() {
     shakeService.stop()
     window.removeEventListener('shake', this.handleShake)
     window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
+  },
+  mounted() {
+    this.shakeServiceInit()
+  },
+  beforeDestroy() {
+    this.shakeServiceCleanup()
+  },
+  activated() {
+    this.shakeServiceInit()
+  },
+  deactivated() {
+    this.shakeServiceCleanup()
   },
 }
 </script>
