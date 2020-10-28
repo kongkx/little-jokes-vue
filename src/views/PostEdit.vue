@@ -17,9 +17,10 @@
     <div v-if="data" class="PostCreate__content">
       <div class="FieldSet">
         <textarea
+          ref="input"
           class="FormInput"
           placeholder="内容"
-          style="min-height: 200px;"
+          style="min-height: 300px;"
           v-model="content"
         />
       </div>
@@ -32,7 +33,7 @@
 import { getPost, updatePost } from '../api'
 import LoadingMask from '../components/LoadingMask'
 export default {
-  name: 'post-edit',
+  name: 'PostEdit',
   components: {
     LoadingMask,
   },
@@ -94,12 +95,15 @@ export default {
       this.submitted = false
     },
   },
-  created() {
+  mounted() {
     const postId = this.$route.params.id
     getPost(postId)
       .then(res => {
         this.data = res.data
         this.content = res.data.content
+        this.$nextTick(() => {
+          this.$refs.input && this.$refs.input.focus()
+        })
       })
       .catch(err => {
         this.fetchError = err
