@@ -32,6 +32,7 @@ function getInitialState() {
       isWeixin: isWeixin(),
       onceTouched: false,
     },
+    excludeRoutes: ['Login', 'Register', 'PostCreate', 'PostEdit'],
   }
 }
 

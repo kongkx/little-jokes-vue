@@ -10,17 +10,16 @@
             >最新</span
           >
         </div>
-        <div class="tabItem" :class="{ 'is-active': currentTab === 'hotest' }">
-          <span class="tabItem__label" @click="setActiveTab('hotest')"
+        <div class="tabItem" :class="{ 'is-active': currentTab === 'hottest' }">
+          <span class="tabItem__label" @click="setActiveTab('hottest')"
             >最热</span
           >
         </div>
       </div>
-      <joke-list
-        class="Home__list"
-        :fetchData="handleDataFetch"
-        :key="currentTab"
-      />
+
+      <keep-alive>
+        <component :is="currentTab" class="Home__list" />
+      </keep-alive>
       <FloatActionBtn v-if="$store.getters.isLoggedIn" @click="initCreatePost">
         <PlusIcon style="width: 24px; height: 24px;" />
       </FloatActionBtn>
@@ -33,16 +32,17 @@
 </template>
 
 <script>
-import JokeList from '../components/JokeList'
+import Hottest from '../components/Hottest'
+import Latest from '../components/Latest'
 import AuthAppLogo from '../components/AuthAppLogo'
 import FloatActionBtn from '../components/FloatActionBtn'
 import PlusIcon from '../components/PlusIcon'
-import { fetchLatestPost, fetchHottestPost } from '../api'
 
 export default {
   name: 'Home',
   components: {
-    JokeList,
+    Hottest,
+    Latest,
     AuthAppLogo,
     FloatActionBtn,
     PlusIcon,
@@ -61,12 +61,6 @@ export default {
     currentTab() {
       return this.$route.query.tab || 'latest'
     },
-    handleDataFetch() {
-      if (this.currentTab === 'latest') {
-        return fetchLatestPost
-      }
-      return fetchHottestPost
-    },
   },
   methods: {
     setActiveTab(tab) {
@@ -84,6 +78,9 @@ export default {
         name: 'post-create',
       })
     },
+  },
+  beforeDestroy() {
+    console.log('before Destroy')
   },
 }
 </script>

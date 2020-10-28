@@ -16,17 +16,15 @@
 <script>
 import MescrollVue from 'mescroll.js/mescroll.vue'
 import JokeCard from './JokeCard'
+import { fetchLatestPost } from '../api'
 
 export default {
-  name: 'joke-list',
+  name: 'latest',
   components: {
     JokeCard,
     MescrollVue,
   },
   props: {
-    fetchData: {
-      type: Function,
-    },
     noContentHint: {
       type: String,
     },
@@ -43,6 +41,9 @@ export default {
     }
   },
   methods: {
+    fetchData(...args) {
+      return fetchLatestPost(...args)
+    },
     mescrollInit(mescroll) {
       this.mescroll = mescroll // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
     },

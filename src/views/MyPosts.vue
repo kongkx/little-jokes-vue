@@ -3,7 +3,11 @@
     <template v-slot:header>
       <PageHeader title="我的笑话" backButton @back="goBack" />
     </template>
-    <post-list class="MyPosts__list" :fetchData="handleDataFetch" />
+    <post-list
+      ref="postsList"
+      class="MyPosts__list"
+      :fetchData="handleDataFetch"
+    />
   </page>
 </template>
 
@@ -42,6 +46,21 @@ export default {
   },
   deactivated() {
     this.$store.commit('showNav')
+  },
+  beforeRouteEnter(to, from, next) {
+    // 如果没有配置顶部按钮或isBounce,则beforeRouteEnter不用写
+    next(vm => {
+      // 滚动到原来的列表位置,恢复顶部按钮和isBounce的配置
+      vm.$refs.postsList.$refs.mescroll &&
+        vm.$refs.postsList.$refs.mescroll.beforeRouteEnter()
+    })
+  },
+  beforeRouteLeave(to, from, next) {
+    // 如果没有配置顶部按钮或isBounce,则beforeRouteLeave不用写
+    // 记录列表滚动的位置,隐藏顶部按钮和isBounce的配置
+    this.$refs.postsList.$refs.mescroll &&
+      this.$refs.postsList.$refs.mescroll.beforeRouteLeave()
+    next()
   },
 }
 </script>

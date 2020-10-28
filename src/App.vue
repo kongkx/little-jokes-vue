@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app" :class="{ hasBottomNav: showBottomNav }">
-    <keep-alive>
+    <keep-alive :exclude="excludeRoutes">
       <router-view />
     </keep-alive>
     <BottomNav v-if="showBottomNav" />
@@ -19,6 +19,7 @@ export default {
   computed: mapState({
     showBottomNav: state => state.showBottomNav,
     isWeixin: state => state.device.isWeixin,
+    excludeRoutes: state => state.excludeRoutes,
   }),
   created() {
     if (this.isWeixin) {
