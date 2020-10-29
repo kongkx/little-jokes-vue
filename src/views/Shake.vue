@@ -102,18 +102,18 @@ export default {
           break
       }
     },
-  },
-  shakeServiceInit() {
-    window.addEventListener('shake', this.handleShake)
-    window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
-    if (this.onceTouched) {
-      shakeService.start()
-    }
-  },
-  shakeServiceCleanup() {
-    shakeService.stop()
-    window.removeEventListener('shake', this.handleShake)
-    window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
+    shakeServiceInit() {
+      window.addEventListener('shake', this.handleShake)
+      window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
+      if (this.onceTouched) {
+        shakeService.start()
+      }
+    },
+    shakeServiceCleanup() {
+      shakeService.stop()
+      window.removeEventListener('shake', this.handleShake)
+      window.addEventListener('shake_init_failed', this.handleShakeInitFailed)
+    },
   },
   mounted() {
     this.shakeServiceInit()
