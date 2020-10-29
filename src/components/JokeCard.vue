@@ -2,9 +2,9 @@
   <div class="JokeCardWrap">
     <div
       class="JokeCardWrap__main JokeCard"
-      @touchstart="handleTouchStart"
-      @touchend="handleTouchEnd"
-      @touchmove="handleTouchMove"
+      @touchstart.capture="handleTouchStart"
+      @touchend.capture="handleTouchEnd"
+      @touchmove.capture="handleTouchMove"
       v-longpress="copyContentToClipboard"
       :style="swipeAnimation"
       :class="{ hasArchived: data.like && data.like.archived_at }"
@@ -176,27 +176,23 @@ export default {
     },
     swipeAnimation() {
       // if is swiping then
+      if (!this.swipeActions || !this.swipeActions.length) {
+        return {}
+      }
+      const style = {
+        transition: 'all 150ms ease-out',
+      }
       if (this.isSwiping) {
-        const style = {
-          transition: 'transform 33ms linear',
-        }
         if (this.swipeDelta < 0) {
           style.transform = `translateX(${this.swipeDelta}px)`
         }
-        return style
       } else if (this.showActions) {
-        if (!this.$refs.actions) {
-          return {}
-        }
         const { width } = this.$refs.actions.getBoundingClientRect()
-        return {
-          transform: `translateX(-${width}px)`,
-        }
+        style.transform = `translateX(-${width}px)`
       } else {
-        return {
-          transform: `translateX(0px)`,
-        }
+        style.transform = `translateX(0px)`
       }
+      return style
     },
     ...mapGetters(['isLoggedIn']),
     ...mapState({
@@ -372,6 +368,9 @@ export default {
       window.open(path)
     },
     copyContentToClipboard() {
+      if (this.isSwiping) {
+        return
+      }
       var vm = this
       navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
         if (result.state == 'granted') {
@@ -407,15 +406,16 @@ export default {
       }
       if (this.isSwiping) {
         event.stopPropagation()
-        event.preventDefault()
       }
       const touch = event.changedTouches[0]
       const delta = touch.pageX - this.initialX
       const deltaY = touch.pageY - this.initialY
-      this.swipeDelta = delta
       if (Math.abs(delta) > Math.max(Math.abs(deltaY, 10))) {
         this.isSwiping = true
       }
+      window.requestAnimationFrame(() => {
+        this.swipeDelta = delta
+      })
     },
     handleTouchEnd() {
       if (!this.$refs.actions) {
