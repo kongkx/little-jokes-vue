@@ -4,7 +4,21 @@
       <PageHeader title="小小笑话"></PageHeader>
     </template>
     <div class="Home__content">
-      <div class="tabs">
+      <van-tabs
+        v-model="currentTab"
+        color="#fdcd31"
+        background="#fafafa"
+        swipeable
+        animated
+      >
+        <van-tab title="最新" name="latest">
+          <Latest class="Home__list" />
+        </van-tab>
+        <van-tab title="最热" name="hottest">
+          <Hottest class="Home__list" />
+        </van-tab>
+      </van-tabs>
+      <!-- <div class="tabs">
         <div class="tabItem" :class="{ 'is-active': currentTab === 'latest' }">
           <span class="tabItem__label" @click="setActiveTab('latest')"
             >最新</span
@@ -19,7 +33,7 @@
 
       <keep-alive>
         <component :is="currentTab" class="Home__list" />
-      </keep-alive>
+      </keep-alive> -->
       <FloatActionBtn v-if="$store.getters.isLoggedIn" @click="initCreatePost">
         <PlusIcon style="width: 24px; height: 24px;" />
       </FloatActionBtn>
@@ -58,14 +72,19 @@ export default {
     }
   },
   computed: {
-    currentTab() {
-      return this.$route.query.tab || 'latest'
+    currentTab: {
+      get: function() {
+        return this.$route.query.tab || 'latest'
+      },
+      set: function(tab) {
+        this.setActiveTab(tab)
+      },
     },
   },
   methods: {
     setActiveTab(tab) {
       if (tab !== this.currentTab) {
-        this.$router.push({
+        this.$router.replace({
           name: 'home',
           query: {
             tab,
@@ -89,51 +108,64 @@ export default {
 .Home {
   &__content {
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  &__list {
-    flex: 1;
-    overflow: hidden;
-    margin-top: 5px;
-  }
-}
-.tabs {
-  display: flex;
-  width: 100vw;
-  overflow: hidden;
-  height: 32px;
-  align-items: center;
-  background-color: var(--body-background-color);
-  position: sticky;
-  top: 0;
-  .tabItem {
-    flex-basis: 50%;
-    text-align: center;
-    &__label {
-      position: relative;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-    &.is-active {
-      .tabItem__label {
-        font-weight: bold;
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          left: 0;
-          top: calc(100% + 2px);
-          height: 3px;
-          width: 100%;
-          background-color: var(--primary-color);
-          border-radius: 2px;
-        }
+
+    .van-tabs {
+      height: 100%;
+
+      &__wrap {
+        flex-shrink: 0;
+        height: 36px;
+      }
+
+      &__content {
+        height: calc(100% - 36px);
       }
     }
+    .van-tab__pane,
+    .van-tab__pane-wrapper {
+      height: 100%;
+    }
+  }
+
+  &__list {
+    height: 100%;
   }
 }
+// .tabs {
+//   display: flex;
+//   width: 100vw;
+//   overflow: hidden;
+//   height: 32px;
+//   align-items: center;
+//   background-color: var(--body-background-color);
+//   position: sticky;
+//   top: 0;
+//   .tabItem {
+//     flex-basis: 50%;
+//     text-align: center;
+//     &__label {
+//       position: relative;
+//       padding-left: 20px;
+//       padding-right: 20px;
+//     }
+//     &.is-active {
+//       .tabItem__label {
+//         font-weight: bold;
+//         &::after {
+//           content: '';
+//           display: block;
+//           position: absolute;
+//           left: 0;
+//           top: calc(100% + 2px);
+//           height: 3px;
+//           width: 100%;
+//           background-color: var(--primary-color);
+//           border-radius: 2px;
+//         }
+//       }
+//     }
+//   }
+// }
 .ActionButton {
   width: 36px;
   height: 36px;

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import PortalVue from 'portal-vue'
 import Toasted from 'vue-toasted'
+import { Tab, Tabs } from 'vant'
 
 import App from './App.vue'
 import router from './router'
@@ -15,6 +16,8 @@ Vue.use(Toasted, {
   duration: 2000,
 })
 Vue.use(Longpress)
+Vue.use(Tab)
+Vue.use(Tabs)
 
 Vue.config.productionTip = false
 
