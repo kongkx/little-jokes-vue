@@ -54,6 +54,9 @@ export default {
     min-width: 36px;
     height: 36px;
     font-size: 16px;
+    &:disabled {
+      opacity: 0.6;
+    }
   }
   &__right {
     position: absolute;

@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       submitting: false,
+      saved: false,
       content: '',
     }
   },
@@ -51,6 +52,7 @@ export default {
       })
         .then(() => {
           this.submitting = false
+          this.saved = true
           this.$router.replace({
             name: 'my-posts',
           })
@@ -76,7 +78,7 @@ export default {
     })
   },
   beforeRouteLeave(to, from, next) {
-    if (this.content.trim()) {
+    if (this.content.trim() && !this.saved) {
       next(window.confirm('放弃添加新笑话？'))
     } else {
       next()
