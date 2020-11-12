@@ -7,7 +7,9 @@
       <van-tabs
         v-model="currentTab"
         color="#fdcd31"
-        background="#fafafa"
+        :title-active-color="tabColors.tabTitleActiveColor"
+        :title-inactive-color="tabColors.titleInactiveColor"
+        :background="tabColors.background"
         swipeable
         animated
       >
@@ -69,6 +71,16 @@ export default {
         callback: this.upCallback,
       },
       data: [],
+      tabColors:
+        this.$store.state.theme === 'dark'
+          ? {
+              background: '#5B5B62',
+              tabTitleActiveColor: '#FFD753',
+              titleInactiveColor: '#E0E0E0',
+            }
+          : {
+              background: '#fafafa',
+            },
     }
   },
   computed: {

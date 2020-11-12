@@ -72,6 +72,10 @@ export default {
     margin-top: auto;
     margin-bottom: 5px;
   }
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+    color: #e0e0e0;
+  }
 }
 .PageTitle {
   font-weight: bold;

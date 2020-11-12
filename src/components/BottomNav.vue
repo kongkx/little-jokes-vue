@@ -9,7 +9,9 @@
           :class="{ 'is-active': isActive }"
         >
           <ShakeIcon class="BottomNav__icon" :active="isActive"></ShakeIcon>
-          <span class="BottomNav__label">摇一摇</span>
+          <span class="BottomNav__label" :class="{ 'is-active': isActive }"
+            >摇一摇</span
+          >
         </a>
       </router-link>
     </div>
@@ -22,7 +24,9 @@
           :class="{ 'is-active': isActive }"
         >
           <HomeIcon :active="isActive" class="BottomNav__icon"></HomeIcon>
-          <span class="BottomNav__label">首页</span>
+          <span class="BottomNav__label" :class="{ 'is-active': isActive }"
+            >首页</span
+          >
         </a>
       </router-link>
     </div>
@@ -35,7 +39,9 @@
           :class="{ 'is-active': isActive }"
         >
           <MyIcon :active="isActive" class="BottomNav__icon"></MyIcon>
-          <span class="BottomNav__label">我的</span>
+          <span class="BottomNav__label" :class="{ 'is-active': isActive }"
+            >我的</span
+          >
         </a>
       </router-link>
     </div>
@@ -94,6 +100,16 @@ export default {
   &__label {
     font-size: 10px;
     line-height: 1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+    &__item {
+      color: #e0e0e0;
+    }
+    &__label.is-active {
+      color: var(--primary-color);
+    }
   }
 }
 </style>

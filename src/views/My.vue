@@ -69,6 +69,11 @@ export default {
     height: 44px;
     font-size: 16px;
   }
+  @media (prefers-color-scheme: dark) {
+    &__logout {
+      background-color: #3e3f46;
+    }
+  }
 }
 .LineItem {
   min-height: 44px;
@@ -81,6 +86,11 @@ export default {
   }
   &__title {
     margin-left: 16px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+    color: #e0e0e0;
   }
 }
 </style>

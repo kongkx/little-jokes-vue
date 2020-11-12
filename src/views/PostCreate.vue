@@ -101,5 +101,11 @@ export default {
   margin-top: 12px;
   padding-left: 12px;
   padding-right: 12px;
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+    textarea {
+      background: transparent;
+    }
+  }
 }
 </style>

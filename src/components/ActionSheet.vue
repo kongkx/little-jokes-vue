@@ -43,6 +43,10 @@ export default {
 .ActionSheet {
   &__actions {
     background-color: white;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: #3e3f46;
+    }
   }
 
   &__action {

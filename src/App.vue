@@ -47,6 +47,12 @@ export default {
   --bottom-nav-height: 45px;
 
   --page-header-height: 40px;
+
+  @media (prefers-color-scheme: dark) {
+    --body-background-color: #202022;
+    --border-color: #202022;
+    --text-color: #e0e0e0;
+  }
 }
 html {
   height: 100%;
@@ -68,6 +74,14 @@ a {
 }
 div {
   box-sizing: border-box;
+}
+textarea {
+  color: var(--text-color);
+}
+@media (prefers-color-scheme: dark) {
+  input {
+    background-color: #202022;
+  }
 }
 .app {
   box-sizing: border-box;
@@ -130,6 +144,7 @@ div {
   }
   &_primary {
     background-color: var(--primary-color);
+    color: #333;
   }
   &_link {
     background-color: transparent;
@@ -150,6 +165,10 @@ div {
 .toasted.toasted-primary.default {
   background-color: var(--primary-color);
   color: var(--text-color);
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+    color: var(--primary-color);
+  }
 }
 // login form related
 .FloatForm {
@@ -157,6 +176,10 @@ div {
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   border-radius: 4px;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+  }
 }
 .FormControl {
   border: 1px solid var(--border-color);

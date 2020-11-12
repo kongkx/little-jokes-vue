@@ -87,6 +87,13 @@ export default {
     margin-left: 24px;
     margin-right: 24px;
   }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--background-color);
+    .JokeCard {
+      background-color: var(--background-color);
+    }
+  }
 }
 .VoteBtn {
   border: none;

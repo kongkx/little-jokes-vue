@@ -32,6 +32,9 @@ function getInitialState() {
       isWeixin: isWeixin(),
       onceTouched: false,
     },
+    theme: window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'default',
     excludeRoutes: ['Login', 'Register', 'PostCreate', 'PostEdit'],
   }
 }

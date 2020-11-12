@@ -502,6 +502,10 @@ export default {
     display: flex;
     justify-content: flex-end;
   }
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
+    color: #e0e0e0;
+  }
 }
 .ShareModal {
   background: white;
@@ -533,6 +537,10 @@ export default {
     justify-content: space-around;
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #3e3f46;
   }
 }
 .ShareOptionBtn {

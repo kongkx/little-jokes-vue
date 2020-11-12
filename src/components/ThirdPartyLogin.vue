@@ -150,6 +150,10 @@ export default {
   &__github {
     color: var(--github-color);
     border-color: var(--github-color);
+    @media (prefers-color-scheme: dark) {
+      color: var(--text-color);
+      border-color: var(--text-color);
+    }
   }
 }
 </style>
