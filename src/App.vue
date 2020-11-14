@@ -77,6 +77,8 @@ div {
 }
 textarea {
   color: var(--text-color);
+  background-color: var(--body-background-color);
+  border-color: #3e3f46;
 }
 @media (prefers-color-scheme: dark) {
   input {

@@ -112,5 +112,8 @@ export default {
     color: var(--meta-color);
     font-size: 14px;
   }
+  @media (prefers-color-scheme: dark) {
+    background: #3e3f46;
+  }
 }
 </style>
