@@ -476,6 +476,14 @@ export default {
       background-color: var(--danger-color);
       color: white;
     }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--primary-color);
+      background-color: #202022;
+      &_danger {
+        color: var(--danger-color);
+      }
+    }
   }
 }
 .JokeCard {
