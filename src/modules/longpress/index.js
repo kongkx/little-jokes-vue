@@ -27,6 +27,17 @@ export default {
         // 定义变量
         let pressTimer = null
 
+        // 重置计时器
+        let reset = () => {
+          if (pressTimer) {
+            clearTimeout(pressTimer)
+          }
+          pressTimer = setTimeout(() => {
+            // 执行函数
+            handler()
+          }, options.time)
+        }
+
         // 创建计时器（ 1秒后执行函数 ）
         let start = e => {
           if (e.type === 'click' && e.button !== 0) {
@@ -38,6 +49,8 @@ export default {
               handler()
             }, options.time)
           }
+          window.addEventListener('mousemove', reset)
+          window.addEventListener('touchmove', reset)
         }
         // 取消计时器
         let cancel = () => {
@@ -46,6 +59,8 @@ export default {
             clearTimeout(pressTimer)
             pressTimer = null
           }
+          window.removeEventListener('mousemove', reset)
+          window.removeEventListener('touchmove', reset)
         }
         // 运行函数
         const handler = e => {

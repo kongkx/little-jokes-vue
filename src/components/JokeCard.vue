@@ -38,13 +38,13 @@
               <LinkIcon
                 class="ShareOptionBtn__icon ShareOptionBtn__icon_link"
               />
-              <span class="ShareButtonBtn__label">复制链接</span>
+              <span class="ShareOptionBtn__label">复制链接</span>
             </button>
             <button class="ShareOptionBtn" @click="handleWechatShare">
               <WechatIcon
                 class="ShareOptionBtn__icon ShareOptionBtn__icon_wechat"
               />
-              <span class="ShareButtonBtn__label">微信</span>
+              <span class="ShareOptionBtn__label">微信</span>
             </button>
             <button
               v-if="isWeixin"
@@ -54,17 +54,17 @@
               <WechatFeedIcon
                 class="ShareOptionBtn__icon ShareOptionBtn__icon_wechat"
               />
-              <span class="ShareButtonBtn__label">朋友圈</span>
+              <span class="ShareOptionBtn__label">朋友圈</span>
             </button>
             <button class="ShareOptionBtn" @click="handleWeiboShare">
               <WeiboIcon
                 class="ShareOptionBtn__icon ShareOptionBtn__icon_weibo"
               />
-              <span class="ShareButtonBtn__label">微博</span>
+              <span class="ShareOptionBtn__label">微博</span>
             </button>
             <button class="ShareOptionBtn" @click="handleQQShare">
               <QQIcon class="ShareOptionBtn__icon ShareOptionBtn__icon_qq" />
-              <span class="ShareButtonBtn__label">QQ</span>
+              <span class="ShareOptionBtn__label">QQ</span>
             </button>
           </div>
           <div class="ShareModal__cancel" @click.stop="closeSharePanel">
@@ -115,6 +115,7 @@ import Modal from './Modal'
 import PostReportForm from './PostReportForm'
 import { likePost, unlikePost } from '../api'
 import { mapGetters, mapState } from 'vuex'
+import { copyToClipboard } from '../utils'
 
 export default {
   name: 'JokeCard',
@@ -256,11 +257,17 @@ export default {
       }
     },
     openSharePanel() {
-      if (navigator.share) {
+      if (navigator.share && !this.$store.state.device.isIos) {
         navigator
           .share(this.getShareInfo())
           .then(() => console.log('Successful share'))
-          .catch(error => console.log('Error sharing', error))
+          .catch(error => {
+            alert(error.name)
+            if (error.name === 'AbortError') {
+              // TODO
+            }
+            console.log('Error sharing', error)
+          })
       } else {
         this.sharePanelOpend = true
       }
@@ -294,41 +301,36 @@ export default {
     handleLinkShare() {
       var vm = this
       this.closeSharePanel()
-      navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
-        if (result.state === 'denied') {
-          this.$toasted.error('无法取得粘贴板写入权限')
-        } else if (result.state == 'granted') {
-          navigator.clipboard
-            .writeText(vm.getShareLink())
-            .then(() => {
-              const msg = '链接已复制'
-              this.$toasted.show(msg)
-            })
-            .catch(err => {
-              alert(err.message)
-            })
-        }
-      })
+      var shareLink = vm.getShareLink()
+      copyToClipboard(shareLink)
+        .then(() => {
+          const msg = '链接已复制'
+          this.$toasted.show(msg)
+        })
+        .catch(err => {
+          if (err.state === 'denied') {
+            this.$toasted.error('无法取得粘贴板写入权限')
+          } else {
+            this.$toasted.error(err.message || '无法取得粘贴板写入权限')
+          }
+        })
     },
     handleWechatShare() {
       var vm = this
       this.closeSharePanel()
+      var shareLink = vm.getShareLink()
+
       if (!this.isWeixin) {
-        navigator.permissions
-          .query({ name: 'clipboard-write' })
-          .then(result => {
-            if (result.state === 'denied') {
+        copyToClipboard(shareLink)
+          .then(() => {
+            const msg = '链接已复制，请打开微信后，粘贴后发送'
+            this.$toasted.show(msg)
+          })
+          .catch(err => {
+            if (err.state === 'denied') {
               this.$toasted.error('无法取得粘贴板写入权限')
-            } else if (result.state == 'granted') {
-              navigator.clipboard
-                .writeText(vm.getShareLink())
-                .then(() => {
-                  const msg = '链接已复制，请打开微信后，粘贴后发送'
-                  this.$toasted.show(msg)
-                })
-                .catch(err => {
-                  alert(err.message)
-                })
+            } else {
+              this.$toasted.error(err.message || '无法取得粘贴板写入权限')
             }
           })
       }
@@ -372,21 +374,20 @@ export default {
         return
       }
       var vm = this
-      navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
-        if (result.state == 'granted') {
-          /* write to the clipboard now */
-          navigator.clipboard.writeText(this.data.content).then(
-            function() {
-              vm.$toasted.show('内容已复制到粘贴板')
-            },
-            function() {
-              vm.$toasted.error('内容复制到粘贴板失败')
-            }
-          )
-        } else if (result.state == 'denied') {
-          vm.$toasted.error('无法取得粘贴板写入权限')
-        }
-      })
+      if (navigator.vibrate) {
+        navigator.vibrate(5)
+      }
+      copyToClipboard(this.data.content)
+        .then(() => {
+          vm.$toasted.show('内容已复制到粘贴板')
+        })
+        .catch(err => {
+          if (err && err.state === 'denied') {
+            vm.$toasted.error('无法取得粘贴板写入权限')
+          } else {
+            vm.$toasted.error('内容复制到粘贴板失败')
+          }
+        })
     },
     // swipe feature
     handleTouchStart() {
@@ -556,8 +557,10 @@ export default {
   padding-bottom: 3px;
   background-color: transparent;
   border: none;
-  width: 66px;
-  text-align: center;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &__icon {
     width: 50px;
@@ -584,7 +587,8 @@ export default {
   }
 
   &__label {
-    font-size: 12px;
+    font-size: 14px;
+    margin-top: 4px;
   }
 }
 </style>

@@ -11,9 +11,15 @@ import PageHeader from './components/PageHeader.vue'
 import Longpress from './modules/longpress'
 import './registerServiceWorker'
 
+navigator.vibrate =
+  navigator.vibrate ||
+  navigator.webkitVibrate ||
+  navigator.mozVibrate ||
+  navigator.msVibrate
+
 Vue.use(PortalVue)
 Vue.use(Toasted, {
-  duration: 2000,
+  duration: 500,
 })
 Vue.use(Longpress)
 Vue.use(Tab)

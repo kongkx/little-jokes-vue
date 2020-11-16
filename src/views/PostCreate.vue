@@ -57,8 +57,9 @@ export default {
             name: 'my-posts',
           })
         })
-        .catch(() => {
+        .catch(err => {
           this.submitting = false
+          alert(err.message)
         })
     },
     goBack() {

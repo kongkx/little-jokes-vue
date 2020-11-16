@@ -69,11 +69,6 @@ export default {
         return
       }
       vm.isFetching = true
-      navigator.vibrate =
-        navigator.vibrate ||
-        navigator.webkitVibrate ||
-        navigator.mozVibrate ||
-        navigator.msVibrate
       if (navigator.vibrate) {
         navigator.vibrate(300)
       }
