@@ -75,22 +75,4 @@ export default {
     }
   }
 }
-.LineItem {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-bottom: 1px solid var(--border-color);
-  &:first-of-type {
-    border-top: 1px solid var(--border-color);
-  }
-  &__title {
-    margin-left: 16px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #3e3f46;
-    color: #e0e0e0;
-  }
-}
 </style>

@@ -10,6 +10,7 @@ import Page from './components/Page.vue'
 import PageHeader from './components/PageHeader.vue'
 import Longpress from './modules/longpress'
 import './registerServiceWorker'
+import './style.scss'
 
 navigator.vibrate =
   navigator.vibrate ||

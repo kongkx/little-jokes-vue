@@ -8,7 +8,7 @@
       @init="mescrollInit"
     >
       <JokeCard
-        v-for="(item, index) in data"
+        v-for="(item, index) in filtered"
         :key="item.id"
         :data="item"
         :index="index"
@@ -37,6 +37,9 @@ export default {
     noContentHint: {
       type: String,
     },
+    showArchived: {
+      type: Boolean,
+    },
   },
   data: function() {
     return {
@@ -48,6 +51,14 @@ export default {
       data: [],
       hasContent: true,
     }
+  },
+  computed: {
+    filtered() {
+      if (this.showArchived) {
+        return this.data
+      }
+      return this.data.filter(a => !a.like.archived_at)
+    },
   },
   methods: {
     swipeActions(item) {
