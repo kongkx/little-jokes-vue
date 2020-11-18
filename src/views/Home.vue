@@ -37,12 +37,12 @@
         <component :is="currentTab" class="Home__list" />
       </keep-alive> -->
       <FloatActionBtn v-if="$store.getters.isLoggedIn" @click="initCreatePost">
-        <PlusIcon style="width: 24px; height: 24px;" />
+        <PlusIcon style="width: 24px; height: 24px" />
       </FloatActionBtn>
     </div>
     <div>
       <!-- TODO: 使用 service worker 进行数据缓存 -->
-      <AuthAppLogo style="position: fixed; top: 100%; opacity: 0;" />
+      <AuthAppLogo style="position: fixed; top: 100%; opacity: 0" />
     </div>
   </page>
 </template>
@@ -126,11 +126,10 @@ export default {
 
       &__wrap {
         flex-shrink: 0;
-        height: 36px;
       }
 
       &__content {
-        height: calc(100% - 36px);
+        height: calc(100% - 44px);
       }
     }
     .van-tab__pane,

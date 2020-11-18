@@ -51,8 +51,8 @@ export default {
   &__btn {
     background-color: transparent;
     border: none;
-    min-width: 36px;
-    height: 36px;
+    min-width: 44px;
+    height: 44px;
     font-size: 16px;
     &:disabled {
       opacity: 0.6;
@@ -70,7 +70,7 @@ export default {
 
   .PageTitle {
     margin-top: auto;
-    margin-bottom: 5px;
+    margin-bottom: 9px;
   }
   @media (prefers-color-scheme: dark) {
     background-color: #3e3f46;
