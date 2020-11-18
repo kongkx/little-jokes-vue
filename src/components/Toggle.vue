@@ -33,7 +33,7 @@ export default {
   height: 26px;
   position: relative;
   border-radius: 14px;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
   background-color: #f4f4f4;
   transition: background-color 0.3s ease;
 
@@ -58,6 +58,7 @@ export default {
   }
 
   @media (prefers-color-scheme: dark) {
+    border: 1px solid #333;
     background-color: #202022;
     &::after {
       background-color: #5b5b62;
