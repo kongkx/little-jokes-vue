@@ -123,6 +123,7 @@ export default {
   activated() {
     if (
       this.fetchedAt &&
+      sessionStorage &&
       this.fetchedAt < sessionStorage.getItem('myListUpdatedAt')
     ) {
       this.upCallback(

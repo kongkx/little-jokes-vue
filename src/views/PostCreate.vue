@@ -53,9 +53,10 @@ export default {
         .then(() => {
           this.submitting = false
           this.saved = true
-          this.$router.replace({
-            name: 'my-posts',
-          })
+          this.$toasted.success('创建成功')
+          sessionStorage &&
+            sessionStorage.setItem('myListUpdatedAt', Date.now())
+          this.goBack()
         })
         .catch(err => {
           this.submitting = false

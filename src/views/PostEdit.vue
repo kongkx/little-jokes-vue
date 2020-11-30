@@ -72,7 +72,8 @@ export default {
           this.submitting = false
           this.submitted = true
           this.$toasted.success('修改成功')
-          sessionStorage.setItem('myListUpdatedAt', Date.now())
+          sessionStorage &&
+            sessionStorage.setItem('myListUpdatedAt', Date.now())
           this.goBack()
         })
         .catch(() => {
