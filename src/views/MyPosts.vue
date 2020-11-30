@@ -1,7 +1,21 @@
 <template>
   <page class="MyPosts">
     <template v-slot:header>
-      <PageHeader title="我的笑话" backButton @back="goBack" />
+      <PageHeader title="我的笑话" backButton @back="goBack">
+        <template v-slot:right>
+          <button
+            class="PageHeader__btn"
+            style="margin-right: 12px"
+            @click="
+              $router.push({
+                name: 'post-create',
+              })
+            "
+          >
+            添加
+          </button>
+        </template>
+      </PageHeader>
     </template>
     <post-list
       ref="postsList"
