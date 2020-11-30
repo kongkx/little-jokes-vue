@@ -22,6 +22,7 @@ import PageHeader from '../components/PageHeader'
 import CollectionList from '../components/CollectionList'
 import Toggle from '../components/Toggle'
 import { fetchUserCollection } from '../api'
+import hideBottomBar from '../mixins/hideBottomBar'
 export default {
   name: 'MyCollection',
   components: {
@@ -29,6 +30,7 @@ export default {
     CollectionList,
     Toggle,
   },
+  mixins: [hideBottomBar],
   data: function() {
     return {
       showArchived: true,
@@ -52,18 +54,6 @@ export default {
     toggleArchived(e) {
       console.log(123, e)
     },
-  },
-  mounted() {
-    this.$store.commit('hideNav')
-  },
-  beforeDestroy() {
-    this.$store.commit('showNav')
-  },
-  activated() {
-    this.$store.commit('hideNav')
-  },
-  deactivated() {
-    this.$store.commit('showNav')
   },
 }
 </script>

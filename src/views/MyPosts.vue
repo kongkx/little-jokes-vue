@@ -28,11 +28,13 @@
 <script>
 import { fetchUserPosts } from '../api'
 import PostList from '../components/PostList'
+import hideBottomBar from '../mixins/hideBottomBar'
 export default {
   name: 'MyPosts',
   components: {
     PostList,
   },
+  mixins: [hideBottomBar],
   methods: {
     goBack() {
       const hasHistory = window.history.length > 2
@@ -48,18 +50,6 @@ export default {
       const userId = this.$store.getters.currentUserId
       return fetchUserPosts(userId, params)
     },
-  },
-  mounted() {
-    this.$store.commit('hideNav')
-  },
-  beforeDestroy() {
-    this.$store.commit('showNav')
-  },
-  activated() {
-    this.$store.commit('hideNav')
-  },
-  deactivated() {
-    this.$store.commit('showNav')
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置顶部按钮或isBounce,则beforeRouteEnter不用写

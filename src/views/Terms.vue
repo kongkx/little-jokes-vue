@@ -17,26 +17,16 @@
 
 <script>
 import PageHeader from '../components/PageHeader'
+import hideBottomBar from '../mixins/hideBottomBar'
 export default {
   components: {
     PageHeader,
   },
+  mixins: [hideBottomBar],
   methods: {
     goBack() {
       this.$root.goBack()
     },
-  },
-  mounted() {
-    this.$store.commit('hideNav')
-  },
-  destroyed() {
-    this.$store.commit('showNav')
-  },
-  activated() {
-    this.$store.commit('hideNav')
-  },
-  deactivated() {
-    this.$store.commit('showNav')
   },
 }
 </script>

@@ -16,18 +16,19 @@
 <script>
 import PageHeader from '../components/PageHeader'
 import { loginWithOauthCode } from '../api'
+import hideBottomBar from '../mixins/hideBottomBar'
 export default {
   name: 'OauthHandling',
   components: {
     PageHeader,
   },
+  mixins: [hideBottomBar],
   methods: {
     goBack() {
       this.$root.goBack()
     },
   },
   mounted() {
-    this.$store.commit('hideNav')
     if (!this.$route.query.error) {
       loginWithOauthCode(this.$route.params.provider, this.$route.query)
         .then(res => {
@@ -41,9 +42,6 @@ export default {
           alert(err.message)
         })
     }
-  },
-  destroyed() {
-    this.$store.commit('showNav')
   },
 }
 </script>

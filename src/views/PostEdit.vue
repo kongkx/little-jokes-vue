@@ -32,11 +32,13 @@
 <script>
 import { getPost, updatePost } from '../api'
 import LoadingMask from '../components/LoadingMask'
+import hideBottomBar from '../mixins/hideBottomBar'
 export default {
   name: 'PostEdit',
   components: {
     LoadingMask,
   },
+  mixins: [hideBottomBar],
   data() {
     return {
       submitting: false,

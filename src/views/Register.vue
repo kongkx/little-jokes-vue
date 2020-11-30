@@ -111,6 +111,7 @@
 import PageHeader from '../components/PageHeader'
 import ThirdPartyLogin from '../components/ThirdPartyLogin'
 import AuthAppLogo from '../components/AuthAppLogo'
+import hideBottomBar from '../mixins/hideBottomBar'
 import {
   sendRegisterCode,
   registerWithCode,
@@ -123,6 +124,7 @@ export default {
     ThirdPartyLogin,
     AuthAppLogo,
   },
+  mixins: [hideBottomBar],
   data: function() {
     return {
       callingCode: '+86',
@@ -248,18 +250,6 @@ export default {
   created() {
     this.timer = undefined
     this.resentLimit = 5
-  },
-  mounted() {
-    this.$store.commit('hideNav')
-  },
-  destroyed() {
-    this.$store.commit('showNav')
-  },
-  activated() {
-    this.$store.commit('hideNav')
-  },
-  deactivated() {
-    this.$store.commit('showNav')
   },
 }
 </script>

@@ -30,6 +30,7 @@
 
 <script>
 import { createPost } from '../api'
+import hideBottomBar from '../mixins/hideBottomBar'
 export default {
   name: 'PostCreate',
   data() {
@@ -39,6 +40,7 @@ export default {
       content: '',
     }
   },
+  mixins: [hideBottomBar],
   methods: {
     handleSubmit() {
       const content = this.content.trim()
