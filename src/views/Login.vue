@@ -8,7 +8,11 @@
         <AuthAppLogo class="Login__logo" />
       </div>
       <div class="Login__form">
-        <div v-if="$route.query.type === 'code'" class="FloatForm">
+        <form
+          v-if="$route.query.type === 'code'"
+          class="FloatForm"
+          @submit.prevent="loginWithCode"
+        >
           <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
             <span class="PhoneWidget__regionSelect">{{ callingCode }}</span>
             <input
@@ -51,7 +55,6 @@
           </div>
           <button
             class="btn btn_primary btn_block l_mt_12"
-            @click="loginWithCode"
             :disabled="submitting"
           >
             登录
@@ -63,8 +66,8 @@
               >注册</router-link
             >
           </div>
-        </div>
-        <div v-else class="FloatForm">
+        </form>
+        <form v-else class="FloatForm" @submit.prevent="loginWithPassword">
           <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
             <span class="PhoneWidget__regionSelect">{{ callingCode }}</span>
             <input
@@ -98,7 +101,6 @@
           </div>
           <button
             class="btn btn_primary btn_block l_mt_12"
-            @click="loginWithPassword"
             :disabled="submitting"
             type="submit"
           >
@@ -111,7 +113,7 @@
               >注册</router-link
             >
           </div>
-        </div>
+        </form>
       </div>
       <ThirdPartyLogin class="Login__3rdParty" />
     </div>

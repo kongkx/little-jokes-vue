@@ -8,7 +8,11 @@
         <AuthAppLogo class="Register__logo" />
       </div>
       <div class="Register__form">
-        <div v-if="$route.query.type === 'code'" class="FloatForm">
+        <form
+          v-if="$route.query.type === 'code'"
+          class="FloatForm"
+          @submit.prevent="registerWithCode"
+        >
           <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
             <span class="PhoneWidget__regionSelect">+86</span>
             <input
@@ -50,7 +54,7 @@
           </div>
           <button
             class="btn btn_primary btn_block l_mt_12"
-            @click="registerWithCode"
+            type="submit"
             :disabled="submitting"
           >
             注册
@@ -59,8 +63,8 @@
             已经有账号？ 点此
             <router-link to="/login" replace>登录</router-link>
           </div>
-        </div>
-        <div v-else class="FloatForm">
+        </form>
+        <form v-else class="FloatForm" @submit.prevent="registerWithPassword">
           <div class="FormControl PhoneWidget" style="margin-bottom: 20px;">
             <span class="PhoneWidget__regionSelect">+86</span>
             <input
@@ -91,8 +95,8 @@
           </div>
           <button
             class="btn btn_primary btn_block l_mt_12"
-            @click="registerWithPassword"
             :disabled="submitting"
+            type="submit"
           >
             注册
           </button>
@@ -100,7 +104,7 @@
             已经有账号？ 点此
             <router-link to="/login" replace>登录</router-link>
           </div>
-        </div>
+        </form>
       </div>
       <ThirdPartyLogin />
     </div>
