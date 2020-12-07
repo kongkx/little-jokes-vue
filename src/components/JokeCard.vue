@@ -9,7 +9,7 @@
       :style="swipeAnimation"
       :class="{ hasArchived: data.like && data.like.archived_at }"
     >
-      <div class="JokeCard__main">{{ data.content }}</div>
+      <div class="JokeCard__main" v-html="content" />
       <div class="JokeCard__footer">
         <button class="ActionButton" @click="openExtraMenu">
           <DotsIcon />
@@ -157,6 +157,9 @@ export default {
   },
 
   computed: {
+    content() {
+      return this.data.content.replace(/\n/g, '<br />')
+    },
     hasSwipeActions() {
       return this.swipeActions && this.swipeActions.length > 0
     },
