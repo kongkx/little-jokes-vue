@@ -5,7 +5,7 @@
         <template v-slot:right>
           <button
             class="PageHeader__btn"
-            style="margin-right: 12px;"
+            style="margin-right: 12px"
             @click="handleSubmit"
             :disabled="submitting"
           >
@@ -20,7 +20,7 @@
           ref="input"
           class="FormInput"
           placeholder="内容"
-          style="min-height: 300px;"
+          style="min-height: 300px"
           v-model="content"
         />
       </div>
@@ -83,7 +83,7 @@ export default {
         })
     },
     goBack() {
-      const hasHistory = window.history.length > 2
+      const hasHistory = window.history.length > 2 || window.location.state
       if (hasHistory) {
         this.$router.go(-1)
       } else {

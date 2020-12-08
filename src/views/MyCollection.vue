@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     goBack() {
-      const hasHistory = window.history.length > 2
+      const hasHistory = window.history.length > 2 || window.location.state
       if (hasHistory) {
         this.$router.go(-1)
       } else {
