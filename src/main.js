@@ -8,6 +8,8 @@ import router from './router'
 import store from './store'
 import Page from './components/Page.vue'
 import PageHeader from './components/PageHeader.vue'
+import AutoGrowingTextarea from './components/AutoGrowingTextarea'
+
 import Longpress from './modules/longpress'
 import './registerServiceWorker'
 import './style.scss'
@@ -30,6 +32,7 @@ Vue.config.productionTip = false
 
 Vue.component('page', Page)
 Vue.component('PageHeader', PageHeader)
+Vue.component('AutoGrowingTextarea', AutoGrowingTextarea)
 
 new Vue({
   router,

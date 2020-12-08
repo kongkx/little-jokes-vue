@@ -16,11 +16,11 @@
     </template>
     <div v-if="data" class="PostCreate__content">
       <div class="FieldSet">
-        <textarea
+        <AutoGrowingTextarea
           ref="input"
           class="FormInput"
           placeholder="内容"
-          style="min-height: 300px"
+          rows="10"
           v-model="content"
         />
       </div>
