@@ -3,7 +3,9 @@
     <template v-slot:header>
       <PageHeader backButton @back="goBack" />
     </template>
-    <PostDetail v-if="!!data" :data="data" />
+    <div class="PostPage__content">
+      <PostDetail v-if="!!data" :data="data" />
+    </div>
   </page>
 </template>
 
@@ -46,4 +48,11 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.PostPage {
+  &__content {
+    height: 100%;
+    overflow: auto;
+  }
+}
+</style>

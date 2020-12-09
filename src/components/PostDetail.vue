@@ -78,7 +78,8 @@ export default {
     box-shadow: none;
   }
   &__votes {
-    margin-top: 48px;
+    padding-top: 48px;
+    padding-bottom: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
