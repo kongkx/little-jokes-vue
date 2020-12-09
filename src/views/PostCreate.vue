@@ -16,6 +16,13 @@
     </template>
     <div class="PostCreate__content">
       <div class="FieldSet">
+        <label class="FieldSet__label" for="title"> 标题 </label>
+        <input class="FormInput" v-model="title" placeholder="标题" />
+      </div>
+      <div class="FieldSet">
+        <label class="FieldSet__label FieldSet__label_required" for="content">
+          内容
+        </label>
         <AutoGrowingTextarea
           ref="input"
           class="FormInput"
@@ -37,6 +44,7 @@ export default {
     return {
       submitting: false,
       saved: false,
+      title: '',
       content: '',
     }
   },
@@ -44,14 +52,20 @@ export default {
   methods: {
     handleSubmit() {
       const content = this.content.trim()
+      const title = this.title.trim()
       if (!content) {
         alert('请输入内容')
         return
       }
       this.submitting = true
-      createPost({
+      const data = {
         content,
-      })
+      }
+      if (title) {
+        data.title = title
+      }
+
+      createPost(data)
         .then(() => {
           this.submitting = false
           this.saved = true
@@ -94,22 +108,5 @@ export default {
 <style lang="scss">
 .PostCreate {
   background-color: var(--body-background-color);
-}
-.FormLabel {
-  margin-top: 8px;
-  margin-bottom: 4px;
-}
-.FieldSet {
-  background-color: white;
-  margin-bottom: 12px;
-  margin-top: 12px;
-  padding-left: 12px;
-  padding-right: 12px;
-  @media (prefers-color-scheme: dark) {
-    background-color: #3e3f46;
-    textarea {
-      background: transparent;
-    }
-  }
 }
 </style>

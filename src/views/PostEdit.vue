@@ -16,6 +16,11 @@
     </template>
     <div v-if="data" class="PostCreate__content">
       <div class="FieldSet">
+        <label class="FieldSet__label" for="title"> 标题 </label>
+        <input class="FormInput" v-model="title" placeholder="标题" />
+      </div>
+      <div class="FieldSet">
+        <label for="content" class="FieldSet__label">内容</label>
         <AutoGrowingTextarea
           ref="input"
           class="FormInput"
@@ -43,6 +48,7 @@ export default {
     return {
       submitting: false,
       submitted: false,
+      title: '',
       content: '',
       data: null,
       fetchError: null,
@@ -57,19 +63,29 @@ export default {
   methods: {
     handleSubmit() {
       const content = this.content.trim()
+      const title = this.title.trim()
       if (!content) {
         alert('请输入内容')
         return
       }
-      if (content === this.data.content) {
+      let dirty = false
+      const patch = {}
+      if (title !== this.data.title) {
+        dirty = true
+        patch.title = title
+      }
+      if (content !== this.data.content) {
+        dirty = true
+        patch.content = content
+      }
+
+      if (!dirty) {
         this.goBack()
-        // alert('请进行修改后再提交')
         return
       }
+
       this.submitting = true
-      updatePost(this.$route.params.id, {
-        content,
-      })
+      updatePost(this.$route.params.id, patch)
         .then(() => {
           this.submitting = false
           this.submitted = true
@@ -104,6 +120,7 @@ export default {
       .then(res => {
         this.data = res.data
         this.content = res.data.content
+        this.title = res.data.title
         this.$nextTick(() => {
           this.$refs.input && this.$refs.input.focus()
         })
