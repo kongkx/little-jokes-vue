@@ -3,6 +3,7 @@
     <textarea
       @input="handleInput"
       ref="input"
+      :value="value"
       :placeholder="placeholder"
       :rows="rows"
     ></textarea>
@@ -36,11 +37,9 @@ export default {
   align-items: center;
   position: relative;
   border: solid 1px;
-  padding: 0.25em 0.5em;
   box-sizing: border-box;
 
   &.stacked {
-    padding: 0.5em;
     align-items: stretch;
 
     &::after,
@@ -57,7 +56,7 @@ export default {
     min-width: 1em;
     grid-area: 1 / 2;
     font: inherit;
-    padding: 0.25em;
+    padding: 0;
     margin: 0;
     resize: none;
     background: none;
