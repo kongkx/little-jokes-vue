@@ -14,7 +14,7 @@
       />
       <button
         class="btn btn_primary"
-        style="margin-top: 24px;"
+        style="margin-top: 24px"
         v-if="showInitFeatureHint"
         @click="initShakeService"
       >
@@ -141,6 +141,7 @@ export default {
   }
   &__main {
     height: 100%;
+    overflow: auto;
   }
 }
 </style>

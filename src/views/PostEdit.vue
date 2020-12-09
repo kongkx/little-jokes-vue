@@ -1,5 +1,5 @@
 <template>
-  <page class="PostCreate">
+  <page class="PostEdit">
     <template v-slot:header>
       <PageHeader title="编辑" backButton @back="goBack">
         <template v-slot:right>
@@ -14,7 +14,7 @@
         </template>
       </PageHeader>
     </template>
-    <div v-if="data" class="PostCreate__content">
+    <div v-if="data" class="PostEdit__content">
       <div class="FieldSet">
         <label class="FieldSet__label" for="title"> 标题 </label>
         <input class="FormInput" v-model="title" placeholder="标题" />
@@ -143,8 +143,12 @@ export default {
 </script>
 
 <style lang="scss">
-.PostCreate {
+.PostEdit {
   background-color: var(--body-background-color);
+  &__content {
+    height: 100%;
+    overflow: auto;
+  }
 }
 .FormLabel {
   margin-top: 8px;

@@ -108,5 +108,9 @@ export default {
 <style lang="scss">
 .PostCreate {
   background-color: var(--body-background-color);
+  &__content {
+    height: 100%;
+    overflow: auto;
+  }
 }
 </style>
