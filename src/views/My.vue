@@ -38,7 +38,7 @@ export default {
     logout() {
       if (confirm('确定退出登录？')) {
         this.$store.dispatch('resetAuthInfo')
-        this.$router.replace({ name: 'login' })
+        window.location.reload()
       }
     },
   },
