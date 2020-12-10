@@ -265,7 +265,7 @@ export default {
           .share(this.getShareInfo())
           .then(() => console.log('Successful share'))
           .catch(error => {
-            alert(error.name)
+            // alert(error.name)
             if (error.name === 'AbortError') {
               // TODO
             }
