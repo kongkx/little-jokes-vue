@@ -10,7 +10,7 @@ module.exports = {
       '/api': {
         target: 'http://localhost',
         // target: 'https://jokes.kongkx.com',
-        changeOrigin: false,
+        changeOrigin: true,
       },
     },
     disableHostCheck: true,

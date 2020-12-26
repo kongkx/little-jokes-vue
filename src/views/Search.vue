@@ -3,38 +3,42 @@
     <template v-slot:header>
       <PageHeader title="搜索" backButton @back="goBack"></PageHeader>
     </template>
-    <form class="SearchBar" @submit.prevent="handleSearch">
-      <div class="SearchBar__inputWrap">
-        <div class="SearchBar__icon">
-          <SearchIcon style="position: relative; top: 2px" />
+    <div class="Search__content">
+      <form class="SearchBar" @submit.prevent="handleSearch">
+        <div class="SearchBar__inputWrap">
+          <div class="SearchBar__icon">
+            <SearchIcon style="position: relative; top: 2px" />
+          </div>
+          <input
+            ref="input"
+            placeholder="关键词"
+            v-model="keyword"
+            class="SearchBar__input"
+          />
+          <!-- <button style="display: none" type="submit">搜索</button> -->
         </div>
-        <input
-          placeholder="关键词"
-          v-model="keyword"
-          class="SearchBar__input"
-        />
-        <!-- <button style="display: none" type="submit">搜索</button> -->
+      </form>
+      <div v-if="q" style="flex: 1; overflow: auto;">
+        <mescroll-vue
+          v-if="hasContent"
+          ref="mescroll"
+          :down="mescrollDown"
+          :up="mescrollUp"
+          @init="mescrollInit"
+        >
+          <JokeCard v-for="item in data" :key="item.id" :data="item" />
+        </mescroll-vue>
+        <div class="well well_hint" v-else>
+          {{ noContentHint || '无相关内容' }}
+        </div>
       </div>
-    </form>
-    <template v-if="q">
-      <mescroll-vue
-        v-if="hasContent"
-        ref="mescroll"
-        :down="mescrollDown"
-        :up="mescrollUp"
-        @init="mescrollInit"
-      >
-        <JokeCard v-for="item in data" :key="item.id" :data="item" />
-      </mescroll-vue>
-      <div class="well well_hint" v-else>
-        {{ noContentHint || '无相关内容' }}
-      </div>
-    </template>
+    </div>
   </page>
 </template>
 
 <script>
 import MescrollVue from 'mescroll.js/mescroll.vue'
+import { mapState } from 'vuex'
 import JokeCard from '../components/JokeCard'
 import SearchIcon from '../components/SearchIcon'
 import { search } from '../api'
@@ -47,8 +51,7 @@ export default {
   },
   data: function() {
     return {
-      keyword: '',
-      q: '',
+      keyword: this.$store.state.search.keyword,
       mescroll: null,
       mescrollDown: {},
       mescrollUp: {
@@ -59,14 +62,21 @@ export default {
       scrollTop: 0,
     }
   },
+  computed: mapState({
+    q: state => state.search.keyword,
+  }),
   methods: {
     goBack() {
       this.$root.goBack('home')
     },
     handleSearch() {
-      this.q = this.keyword
       this.data = []
-      this.mescroll.resetUpScroll(true)
+      this.$store.commit('setSearchKeyword', {
+        keyword: this.keyword,
+      })
+      if (this.mescroll) {
+        this.mescroll.resetUpScroll(true)
+      }
     },
     fetchData(params) {
       return search({
@@ -107,10 +117,26 @@ export default {
   },
   mounted() {
     // console.log(this.$refs.mescroll)
-    this.$refs.mescroll.$el.addEventListener('scroll', this.cacheScrollTop)
+    if (this.$refs.mescroll) {
+      this.$refs.mescroll.$el.addEventListener('scroll', this.cacheScrollTop)
+    }
+    this.$nextTick(() => {
+      this.$refs.input.focus()
+    })
   },
   activated() {
-    this.$refs.mescroll.$el.scrollTop = this.scrollTop
+    if (this.$refs.mescroll) {
+      this.$refs.mescroll.$el.scrollTop = this.scrollTop
+    }
   },
 }
 </script>
+
+<style lang="scss">
+.Search {
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>

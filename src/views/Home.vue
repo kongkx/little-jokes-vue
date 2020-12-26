@@ -131,9 +131,12 @@ export default {
 .Home {
   &__content {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .van-tabs {
-      height: 100%;
+      flex: 1;
+      overflow: auto;
 
       &__wrap {
         flex-shrink: 0;

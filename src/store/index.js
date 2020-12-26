@@ -32,6 +32,9 @@ function getInitialState() {
       isWeixin: isWeixin(),
       onceTouched: false,
     },
+    search: {
+      keyword: '',
+    },
     theme: window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'default',
@@ -72,6 +75,9 @@ const store = new Vuex.Store({
     },
     touched(state) {
       state.device.onceTouched = true
+    },
+    setSearchKeyword(state, payload) {
+      state.search.keyword = payload.keyword
     },
   },
   actions: {
