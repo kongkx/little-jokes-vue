@@ -99,14 +99,7 @@ export default {
         })
     },
     goBack() {
-      const hasHistory = window.history.length > 2 || window.location.state
-      if (hasHistory) {
-        this.$router.go(-1)
-      } else {
-        this.$router.push({
-          name: 'my',
-        })
-      }
+      this.$root.goBack('my')
     },
   },
   watch: {

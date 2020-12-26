@@ -210,3 +210,10 @@ export const unarchiveLike = likeId => {
     method: 'POST',
   })
 }
+
+export const search = params => {
+  return request({
+    url: `/api/search`,
+    params,
+  })
+}

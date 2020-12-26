@@ -80,14 +80,7 @@ export default {
         })
     },
     goBack() {
-      const hasHistory = window.history.length > 2 || location.state
-      if (hasHistory) {
-        this.$router.go(-1)
-      } else {
-        this.$router.push({
-          name: 'my',
-        })
-      }
+      this.$root.goBack('my')
     },
   },
   mounted() {

@@ -4,6 +4,15 @@
       <PageHeader title="小小笑话"></PageHeader>
     </template>
     <div class="Home__content">
+      <div class="SearchBar SearchBar_static">
+        <button
+          class="SearchBar__inputWrap"
+          @click="$router.push({ name: 'search' })"
+        >
+          <SearchIcon style="position: relative; top: 2px; margin-right: 6px" />
+          搜索
+        </button>
+      </div>
       <van-tabs
         v-model="currentTab"
         color="#fdcd31"
@@ -53,6 +62,7 @@ import Latest from '../components/Latest'
 import AuthAppLogo from '../components/AuthAppLogo'
 import FloatActionBtn from '../components/FloatActionBtn'
 import PlusIcon from '../components/PlusIcon'
+import SearchIcon from '../components/SearchIcon'
 
 export default {
   name: 'Home',
@@ -62,6 +72,7 @@ export default {
     AuthAppLogo,
     FloatActionBtn,
     PlusIcon,
+    SearchIcon,
   },
   data: function() {
     return {

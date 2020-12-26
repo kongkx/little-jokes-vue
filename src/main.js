@@ -39,13 +39,13 @@ new Vue({
   store,
   render: h => h(App),
   methods: {
-    goBack() {
+    goBack(fallback = 'home') {
       const hasHistory = window.history.length > 2 || window.location.state
       if (hasHistory) {
         this.$router.go(-1)
       } else {
         this.$router.push({
-          name: 'home',
+          name: fallback,
         })
       }
     },
