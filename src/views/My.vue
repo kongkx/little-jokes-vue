@@ -4,6 +4,7 @@
       <PageHeader title="我的" />
     </template>
     <div class="My__content">
+      <div class="LineItem My__info l_mt_16">账号： {{ currentUser.name }}</div>
       <div class="LineItemList l_mt_16">
         <div class="LineItem" @click="navigateToList">
           <div class="LineItem__title">我的笑话</div>
@@ -19,11 +20,13 @@
 
 <script>
 import PageHeader from '../components/PageHeader'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
     PageHeader,
   },
+  computed: mapGetters(['currentUser']),
   methods: {
     navigateToCollection() {
       this.$router.push({
@@ -68,6 +71,12 @@ export default {
     border-bottom: 1px solid var(--border-color);
     height: 44px;
     font-size: 16px;
+  }
+  &__info {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
   }
   @media (prefers-color-scheme: dark) {
     &__logout {

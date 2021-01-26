@@ -51,6 +51,9 @@ const store = new Vuex.Store({
     currentUserId(state) {
       return state.auth.user ? state.auth.user.id : undefined
     },
+    currentUser(state) {
+      return state.auth.user
+    },
     apiToken(state) {
       return state.auth.api_token
     },

@@ -182,6 +182,12 @@ export const registerWithPassword = async data => {
   })
 }
 
+export const fetchMe = () =>
+  request({
+    url: `/api/users/me`,
+    method: 'GET',
+  })
+
 export const fetchUserCollection = (userId, params) => {
   return request({
     url: `/api/users/${userId}/liked-posts`,
