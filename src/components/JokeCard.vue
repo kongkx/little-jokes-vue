@@ -525,6 +525,9 @@ export default {
   padding-top: 12px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  @media (display-mode: standalone) {
+    padding-bottom: var(--safe-area-inset-bottom);
+  }
   &__title {
     font-size: 14px;
     text-align: center;

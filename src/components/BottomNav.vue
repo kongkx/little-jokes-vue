@@ -102,6 +102,11 @@ export default {
     line-height: 1;
   }
 
+  @media (display-mode: standalone) {
+    padding-bottom: var(--safe-area-inset-bottom);
+    height: calc(var(--bottom-nav-height) + var(--safe-area-inset-bottom));
+  }
+
   @media (prefers-color-scheme: dark) {
     background-color: #3e3f46;
     &__item {
