@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 export const isIos = () => {
   let u = window.navigator.userAgent
   return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
@@ -42,27 +43,37 @@ export const copyToClipboard = text => {
   } else if (window.clipboardData) {
     window.clipboardData.setData(text)
     return Promise.resolve()
+  } else if (isIos()) {
+    const error = new Error('IOS not supported')
+    error.code = 'IS_IOS'
+    return Promise.reject(error)
   } else {
     // Create a temporary element off screen.
     const tmpElem = document.createElement('div')
-    tmpElem.style.position = 'absolute'
-    tmpElem.style.left = '-1000px'
-    tmpElem.style.right = '-1000px'
-    // Add the input value to the temp element.
-    tmpElem.innerText = tmpElem
-    document.body.appendChild(tmpElem)
-    // Select temp element.
-    const range = document.createRange()
-    range.selectNodeContents(tmpElem)
-    const selection = window.getSelection()
-    selection.removeAllRanges()
-    selection.addRange(range)
     return new Promise((resolve, reject) => {
       try {
-        document.execCommand('copy', false, null)
+        tmpElem.style.position = 'fixed'
+        tmpElem.style.left = '0'
+        tmpElem.style.top = '0'
+        tmpElem.style.zIndex = 1000000
+        // Add the input value to the temp element.
+        tmpElem.innerText = text
+        tmpElem.contentEditable = true
+        tmpElem.readOnly = false
+        document.body.appendChild(tmpElem)
+        // Select temp element.
+        const range = document.createRange()
+        range.selectNodeContents(tmpElem)
+        const selection = window.getSelection()
+        selection.removeAllRanges()
+        selection.addRange(range)
+
+        document.execCommand('copy')
         resolve()
       } catch (err) {
         reject(err)
+      } finally {
+        document.body.removeChild(tmpElem)
       }
     })
   }

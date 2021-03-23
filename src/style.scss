@@ -28,7 +28,8 @@ html {
 
 @supports (padding-top: constant(safe-area-inset-top)) {
   body {
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 }
 
@@ -84,7 +85,7 @@ body {
   color: var(--text-color);
   font-family: sans-serif;
   // native-like pwa
-  -webkit-user-select: none;
+  // -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   /* Disables pull-to-refresh but allows overscroll glow effects. */

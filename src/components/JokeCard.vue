@@ -9,7 +9,7 @@
       :style="swipeAnimation"
       :class="{ hasArchived: data.like && data.like.archived_at }"
     >
-      <div class="JokeCard__main" v-html="content" />
+      <div class="JokeCard__main" ref="content" v-html="content" />
       <div class="JokeCard__footer">
         <button class="ActionButton" @click="openExtraMenu">
           <DotsIcon />
@@ -373,7 +373,7 @@ export default {
       window.open(path)
     },
     copyContentToClipboard() {
-      if (this.isSwiping) {
+      if (this.isSwiping || this.$store.state.device.isIos) {
         return
       }
       var vm = this
